@@ -1,4 +1,5 @@
 $font-family-sans-serif: 'Source Sans Pro', sans-serif;
+$body-bg: #bbdde7;
 
 body, html {
   font-size: 16px;
@@ -20,4 +21,40 @@ body, html {
   &:hover {
     text-decoration: underline;
   }
+}
+
+.day-forbidden {
+  &:hover {
+    cursor: no-drop
+  }
+}
+
+.cursor-hover:hover {
+  cursor: pointer;
+}
+
+.v-enter-active,
+.v-leave-active {
+  transition: opacity 0.5s ease;
+}
+
+.v-enter-from,
+.v-leave-to {
+  opacity: 0;
+}
+
+.chart-div {
+  background-color: white;
+  height: 300px;
+  padding: 20px;
+  border-radius: 20px;
+  border: 2px solid black;
+}
+
+.border-yip {
+  border-color: darken($body-bg, 10) !important;
+}
+
+.table-fixed {
+  table-layout: fixed;
 }

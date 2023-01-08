@@ -1,18 +1,33 @@
 export default defineNuxtConfig({
+  ssr: false,
   app: {
     head: {
-      title: "nuxt3-boilerplate",
+      title: "YiP (Year in Pixels)",
       meta: [
         { charset: "utf-8" },
         { name: "viewport", content: "width=device-width, initial-scale=1" },
-        { name: "theme-color", content: "#212121" },
+        { name: "theme-color", content: "#bbdde7" },
+        { name: "author", content: "Alberto Rico" },
+        {
+          name: "keywords",
+          content: [
+            "year",
+            "mood",
+            "pixels",
+            "year in pixels",
+            "free",
+            "pwa",
+            "private",
+          ],
+        },
       ],
       htmlAttrs: {
         "data-bs-theme": "light",
+        lang: "en",
       },
     },
   },
-  css: ["@/assets/main.scss"],
+  css: ["@/assets/main.scss", "@fontsource/source-sans-pro/index.css"],
   modules: [
     "nuxt-icon",
     "@vueuse/nuxt",
@@ -22,13 +37,17 @@ export default defineNuxtConfig({
         autoImports: ["defineStore", "storeToRefs"],
       },
     ],
+    "@pinia-plugin-persistedstate/nuxt",
     "@kevinmarrec/nuxt-pwa",
   ],
   pwa: {
     manifest: {
-      name: "nuxt3-boilerplate",
-      description: "BOILERPLATE DESCRIPTION",
-      theme_color: "#212121",
+      name: "YiP",
+      description: "Web app to track your mood throughout the year",
+      theme_color: "#bbdde7",
     },
+  },
+  piniaPersistedstate: {
+    storage: "localStorage",
   },
 });

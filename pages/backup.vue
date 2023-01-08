@@ -106,7 +106,9 @@ function importData() {
 
     const neededColumns = ["date", "mood"];
 
-    if (neededColumns.some((field) => parsed.meta.fields?.includes(field))) {
+    console.log(parsed.meta.fields);
+
+    if (neededColumns.some((field) => !parsed.meta.fields?.includes(field))) {
       throw new Error("missing required columns");
     }
 

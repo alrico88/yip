@@ -1,7 +1,7 @@
 <template lang="pug">
 .row
   .col
-    h4 Number of days by mood
+    h4.fw-bold Number of days by mood
     .chart-div
       bar(
         :options="options", 
@@ -40,7 +40,7 @@ const daysByMood = computed<ChartData<"bar", number[], string>>(() => {
         count,
       };
     }),
-    "mood",
+    "count",
     "desc"
   );
 

@@ -2,8 +2,11 @@
 .overflow-y-auto
   .container.py-3
     .vstack.gap-3
-      stats-days-by-mood(:year-data="yearData")
-      stats-day-of-week(:year-data="yearData", :chart-options="commonOptions")
+      .row.row-cols-1.row-cols-lg-2.g-4
+        .col
+          stats-days-by-mood(:year-data="yearData")
+        .col
+          stats-day-of-week(:year-data="yearData", :chart-options="commonOptions")
       stats-day-of-year(:year-data="yearData", :chart-options="commonOptions")
       stats-week-of-year(:year-data="yearData", :chart-options="commonOptions")
 </template>

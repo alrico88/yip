@@ -1,7 +1,7 @@
 <template lang="pug">
 .row
   .col
-    h4 Average mood by day of year
+    h4.fw-bold Average mood by day of year
     .chart-div
       line-chart(
         :options="chartOptions",

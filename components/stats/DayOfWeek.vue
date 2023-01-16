@@ -1,7 +1,7 @@
 <template lang="pug">
 .row
   .col
-    h4 Average mood by day of week
+    h4.fw-bold Average mood by day of week
     .chart-div
       bar(
         :options="chartOptions", 

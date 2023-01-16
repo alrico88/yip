@@ -50,3 +50,13 @@ const navigation = [
   },
 ];
 </script>
+
+<style lang="scss" scoped>
+.nav-link {
+  font-size: 1.2rem;
+
+  &.active {
+    font-weight: 600;
+  }
+}
+</style>

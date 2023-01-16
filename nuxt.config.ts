@@ -27,7 +27,12 @@ export default defineNuxtConfig({
       },
     },
   },
-  css: ["@/assets/main.scss", "@fontsource/source-sans-pro/index.css"],
+  css: [
+    "@/assets/main.scss",
+    "@fontsource/source-sans-pro/index.css",
+    "@fontsource/source-sans-pro/600.css",
+    "@fontsource/source-sans-pro/700.css",
+  ],
   modules: [
     "nuxt-icon",
     "@vueuse/nuxt",

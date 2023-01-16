@@ -54,6 +54,10 @@ const selectedMoodBgColor = computed<string>(() => {
   return getMoodBg(mood);
 });
 
+const selectedMoodTextColor = computed(() =>
+  getGoodContrastColor(selectedMoodBgColor.value)
+);
+
 onMounted(() => {
   selectedDate.value = null;
 });
@@ -72,5 +76,6 @@ onMounted(() => {
 .mood-bg {
   transition: background-color 0.4s ease;
   background-color: v-bind("selectedMoodBgColor");
+  color: v-bind("selectedMoodTextColor");
 }
 </style>

@@ -9,7 +9,11 @@ export const colorScale = createLinearScale(
 
 export function getMoodBg(mood: DayMood): string {
   return color(colorScale(Number(mood)) as string)
-    .alpha(0.3)
+    .lighten(0.3)
     .rgb()
     .string();
+}
+
+export function getGoodContrastColor(bgColor: string): string {
+  return color(bgColor).isLight() ? "black" : "white";
 }

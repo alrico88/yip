@@ -4,7 +4,7 @@ td.p-0(
   :class="cellClassNames",
   :style="cellStyle"
   @click="setDay",
-  :data-day="formattedDay"
+  :data-day="dayAsString"
 )
   icon(v-if="isToday", size="20px", name="fluent:calendar-today-16-regular")
 </template>
@@ -32,44 +32,44 @@ const dayExists = computed(() => {
   );
 });
 
-const dayJsDay = computed(() =>
-  dayjs()
-    .set("date", props.day)
-    .set("month", props.month - 1)
-    .set("year", props.year)
+const dayAsString = computed(() =>
+  convertToDateStr(props.day, props.month, props.year)
 );
-
-const formattedDay = computed(() => dayJsDay.value.format(dayFormat));
 const tooltipContent = computed(() =>
-  dayJsDay.value.format("ddd DD, MMMM YYYY")
+  dayjs(dayAsString.value).format("ddd DD, MMMM YYYY")
 );
 
 const today = dayjs().format(dayFormat);
-const isToday = computed(() => formattedDay.value === today);
-const isAfterToday = computed(() => formattedDay.value > today);
+const isToday = computed(() => dayAsString.value === today);
+const isAfterToday = computed(() => dayAsString.value > today);
 
 const cellClassNames = computed(() => {
-  const asStr = convertToDateStr(props.day, props.month, props.year);
+  if (!dayExists.value) {
+    return {
+      "invalid-day": true,
+    };
+  }
 
   return {
-    "cursor-hover": dayExists.value && !isAfterToday.value,
+    "cursor-hover": !isAfterToday.value,
     "bg-light": isAfterToday.value,
-    "day-forbidden": isAfterToday.value || !dayExists.value,
-    "invalid-day": !dayExists.value,
-    "border border-3 border-dark": asStr === dataStore.selectedDate,
+    "day-forbidden": isAfterToday.value,
+    "border border-3 border-dark": dayAsString.value === dataStore.selectedDate,
   };
 });
 
-const cellStyle = computed<StyleValue>(() => {
-  const asStr = convertToDateStr(props.day, props.month, props.year);
+const mood = eagerComputed(() => indexedDateMoods.value.get(dayAsString.value));
 
-  const mood = indexedDateMoods.value.get(asStr);
+const cellStyle = computed<StyleValue>(() => {
+  if (!dayExists.value) {
+    return {};
+  }
 
   if (mood === null) {
     return {};
   } else {
     return {
-      backgroundColor: colorScale(Number(mood)) as string,
+      backgroundColor: colorScale(Number(mood.value)) as string,
     };
   }
 });
@@ -85,7 +85,7 @@ function setDay(): void {
 
 <style lang="scss" scoped>
 .invalid-day {
-  background-color: #dfdbe5;
-  background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%239C92AC' fill-opacity='0.4' fill-rule='evenodd'%3E%3Cpath d='M0 40L40 0H20L0 20M40 40V20L20 40'/%3E%3C/g%3E%3C/svg%3E");
+  background-color: #f7f7f7;
+  background-image: url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23c8c8c8' fill-opacity='0.4' fill-rule='evenodd'%3E%3Ccircle cx='3' cy='3' r='3'/%3E%3Ccircle cx='13' cy='13' r='3'/%3E%3C/g%3E%3C/svg%3E");
 }
 </style>

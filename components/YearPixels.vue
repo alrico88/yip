@@ -15,7 +15,7 @@
                 .clamper {{ day }}
               mood-cell(
                 v-for="month of months",
-                :key="`${year}${month}${day}`",
+                :key="convertToDateStr(dayFormat, month, year)",
                 :day="day",
                 :month="month",
                 :year="year"

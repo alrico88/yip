@@ -21,6 +21,7 @@
     "@types/file-saver": "^2.0.5",
     "@types/lodash-es": "^4.17.6",
     "@types/papaparse": "^5.3.7",
+    "@types/qrcode": "^1.5.0",
     "@volar/vue-language-plugin-pug": "^1.0.20",
     "@vue/eslint-config-prettier": "^7.0.0",
     "@vue/eslint-config-typescript": "^11.0.2",
@@ -28,7 +29,7 @@
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-vue": "^9.6.0",
-    "nuxt": "3.1.1",
+    "nuxt": "3.2.0",
     "nuxt-icon": "^0.2.10",
     "prettier": "^2.8.1",
     "pug": "^3.0.2",
@@ -38,6 +39,8 @@
   "dependencies": {
     "@coreui/bootstrap-vue": "1.0.0-beta.0",
     "@fontsource/source-sans-pro": "^4.5.11",
+    "@keyvhq/core": "^1.6.26",
+    "@keyvhq/redis": "^1.6.26",
     "@pinia-plugin-persistedstate/nuxt": "^1.0.0",
     "@sindresorhus/is": "^5.3.0",
     "@vueuse/core": "^9.10.0",
@@ -46,6 +49,7 @@
     "chart.js": "^4.1.2",
     "color": "^4.2.3",
     "dayjs": "^1.11.7",
+    "espera": "^1.0.0",
     "file-saver": "^2.0.5",
     "hachescript": "^1.2.0",
     "html-to-image": "^1.11.4",
@@ -53,8 +57,11 @@
     "math-helper-functions": "^2.3.0",
     "papaparse": "^5.3.2",
     "promise-file-reader": "^1.0.3",
+    "qrcode": "^1.5.1",
     "save-as": "^0.1.8",
     "scale-helper-functions": "^2.2.0",
+    "string-crypto": "^2.0.2",
+    "uncrypto": "^0.1.2",
     "vue-chartjs": "^5.1.0"
   }
 }

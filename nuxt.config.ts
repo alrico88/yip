@@ -55,4 +55,9 @@ export default defineNuxtConfig({
   piniaPersistedstate: {
     storage: "localStorage",
   },
+  runtimeConfig: {
+    redisUrl: "",
+    redisPass: "",
+    encryptPass: "",
+  },
 });

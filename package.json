@@ -39,8 +39,6 @@
   "dependencies": {
     "@coreui/bootstrap-vue": "1.0.0-beta.0",
     "@fontsource/source-sans-pro": "^4.5.11",
-    "@keyvhq/core": "^1.6.26",
-    "@keyvhq/redis": "^1.6.26",
     "@pinia-plugin-persistedstate/nuxt": "^1.0.0",
     "@sindresorhus/is": "^5.3.0",
     "@vueuse/core": "^9.10.0",
@@ -49,6 +47,7 @@
     "chart.js": "^4.1.2",
     "color": "^4.2.3",
     "dayjs": "^1.11.7",
+    "ephemeral-data-store": "^0.0.1",
     "espera": "^1.0.0",
     "file-saver": "^2.0.5",
     "hachescript": "^1.2.0",
@@ -60,8 +59,6 @@
     "qrcode": "^1.5.1",
     "save-as": "^0.1.8",
     "scale-helper-functions": "^2.2.0",
-    "string-crypto": "^2.0.2",
-    "uncrypto": "^0.1.2",
     "vue-chartjs": "^5.1.0"
   }
 }

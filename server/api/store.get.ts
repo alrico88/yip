@@ -1,15 +1,13 @@
-import { keyv } from "../redis/client";
-import { decryptString } from "~~/utils/encryption";
+import { dataStore } from "~~/utils/storage";
 
 export default defineEventHandler(async (event) => {
   const { id } = getQuery(event);
-
-  const storedData = await keyv.get(id as string);
+  const storedData = await dataStore.get(id as string);
 
   if (storedData) {
     return {
       success: true,
-      data: decryptString(storedData),
+      data: storedData,
     };
   } else {
     return {

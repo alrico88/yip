@@ -1,13 +1,8 @@
-import { randomUUID } from "uncrypto";
-import { keyv } from "../redis/client";
-import { convertToMilliseconds, Unit } from "espera";
-import { encryptString } from "~~/utils/encryption";
+import { dataStore } from "~~/utils/storage";
 
 export default defineEventHandler(async (event) => {
   const { data } = await readBody<{ data: string }>(event);
-  const id = randomUUID();
-
-  await keyv.set(id, encryptString(data), convertToMilliseconds(1, Unit.days));
+  const id = await dataStore.save(data);
 
   return {
     success: true,

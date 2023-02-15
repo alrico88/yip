@@ -4,8 +4,6 @@ specifiers:
   '@coreui/bootstrap-vue': 1.0.0-beta.0
   '@fontsource/source-sans-pro': ^4.5.11
   '@kevinmarrec/nuxt-pwa': ^0.15.0
-  '@keyvhq/core': ^1.6.26
-  '@keyvhq/redis': ^1.6.26
   '@pinia-plugin-persistedstate/nuxt': ^1.0.0
   '@pinia/nuxt': ^0.4.6
   '@rushstack/eslint-patch': ^1.2.0
@@ -24,6 +22,7 @@ specifiers:
   chart.js: ^4.1.2
   color: ^4.2.3
   dayjs: ^1.11.7
+  ephemeral-data-store: ^0.0.1
   eslint: ^8.25.0
   eslint-config-prettier: ^8.5.0
   eslint-plugin-prettier: ^4.2.1
@@ -44,16 +43,12 @@ specifiers:
   sass: ^1.57.1
   save-as: ^0.1.8
   scale-helper-functions: ^2.2.0
-  string-crypto: ^2.0.2
   typescript: ^4.9.4
-  uncrypto: ^0.1.2
   vue-chartjs: ^5.1.0
 
 dependencies:
   '@coreui/bootstrap-vue': 1.0.0-beta.0
   '@fontsource/source-sans-pro': 4.5.11
-  '@keyvhq/core': 1.6.26
-  '@keyvhq/redis': 1.6.26
   '@pinia-plugin-persistedstate/nuxt': 1.0.0_@pinia+nuxt@0.4.6
   '@sindresorhus/is': 5.3.0
   '@vueuse/core': 9.12.0
@@ -62,6 +57,7 @@ dependencies:
   chart.js: 4.2.1
   color: 4.2.3
   dayjs: 1.11.7
+  ephemeral-data-store: 0.0.1
   espera: 1.0.0
   file-saver: 2.0.5
   hachescript: 1.2.0
@@ -73,8 +69,6 @@ dependencies:
   qrcode: 1.5.1
   save-as: 0.1.8
   scale-helper-functions: 2.2.0
-  string-crypto: 2.0.2
-  uncrypto: 0.1.2
   vue-chartjs: 5.2.0_chart.js@4.2.1
 
 devDependencies:
@@ -2692,6 +2686,17 @@ packages:
 
   /entities/2.2.0:
     resolution: {integrity: sha512-p92if5Nz619I0w+akJrLZH0MX0Pb5DX39XOwQTtXSdQQOaYH03S1uIQp4mhOZtAXrxq4ViO67YTiLBo2638o9A==}
+
+  /ephemeral-data-store/0.0.1:
+    resolution: {integrity: sha512-BrUHOfGjFw8RNU6//3sV2KH+RisarDlZatkzkBfLEIhZ5R8MbauEytKlG03RGX4dzKvRMOD+GWEdHCu7RsFqjw==}
+    dependencies:
+      '@keyvhq/core': 1.6.26
+      '@keyvhq/redis': 1.6.26
+      nanoid: 4.0.1
+      string-crypto: 2.0.2
+    transitivePeerDependencies:
+      - supports-color
+    dev: false
 
   /errno/0.1.8:
     resolution: {integrity: sha512-dJ6oBr5SQ1VSd9qkk7ByRgb/1SH4JZjCHSW/mr63/QcXO9zLVxvJ6Oy13nio03rxpSnVDDjFor75SjVeZWPW/A==}

@@ -2,14 +2,14 @@
 .vstack.gap-2
   h4.fw-bolder.mb-0 Import
   .form-text Restore data from another computer or browser
-  textarea.form-control.bg-white.border.border-dark(
+  textarea.form-control.border.border-dark(
     v-model="toImport", 
     :rows="10", 
     :placeholder="importPlaceholder",
     ref="dropzoneRef"
   )
-  .bg-white.border.border-dark.p-2
-    c-form-input.bg-white(type="file", accept=".csv", size="sm", @input="handleFile")
+  .border.border-dark.p-2
+    c-form-input(type="file", accept=".csv", size="sm", @input="handleFile")
   div
     .alert.alert-danger.d-block.mb-0(v-if="errorImporting") Error importing data
     template(v-if="importSuccess")
@@ -18,7 +18,22 @@
       button.btn.btn-success.w-100(@click="importData", :disabled="importDisabled")
         icon(name="bi:upload")
         |  Import data
-  .alert.alert-success.d-block.mb-0(v-if="remoteSuccess") Got data from remote. Click on "Import data" to apply changes
+  h4.fw-bolder.mb-0 Import from share link
+  .form-text Use a share link to import data. If a passphrase was used, you must provide it.
+  .row.g-2
+    .col-9
+      .vstack.gap-2
+        .input-group.border.border-dark
+          .input-group-text Remote ID
+          input.form-control(type="text", v-model="remoteId")
+        .input-group.border.border-dark
+          .input-group-text Passphrase
+          input.form-control(type="text", v-model="passphrase")
+    .col-3
+      button.btn.btn-primary.w-100.h-100(@click="loadToImport", :disabled="remoteId === ''") Fetch remote
+  .alert.alert-warning.d-block.mb-0(v-if="remoteStatus.ready") Enter a passphrase (if required) and click "Fetch remote"
+  .alert.alert-success.d-block.mb-0(v-if="remoteStatus.success") Got data from remote. Click on "Import data" to apply changes
+  .alert.alert-danger.d-block.mb-0(v-if="remoteStatus.error") Invalid remote ID or passphrase
 </template>
 
 <script setup lang="ts">
@@ -39,29 +54,47 @@ const toImport = ref("");
 const importSuccess = refAutoReset(false, 3000);
 const importDisabled = computed(() => !is.nonEmptyString(toImport.value));
 
-const remoteSuccess = ref(false);
+const remoteId = ref("");
+const remoteStatus = reactive({
+  success: false,
+  error: false,
+  ready: false,
+});
+const passphrase = ref("");
 
 async function loadToImport() {
-  if (is.nonEmptyString(route.query.id)) {
-    try {
-      const response = await $fetch("/api/store", {
-        query: {
-          id: route.query.id,
-        },
-      });
+  try {
+    remoteStatus.success = false;
+    remoteStatus.error = false;
+    remoteStatus.ready = false;
 
-      if (response.success) {
-        toImport.value = response.data as string;
+    const response = await $fetch("/api/store", {
+      query: {
+        id: route.query.id,
+      },
+    });
 
-        remoteSuccess.value = true;
-      }
-    } catch (err) {
-      console.error(err);
+    if (response.success) {
+      const encryptor = new Encryptor(passphrase.value);
+
+      toImport.value = encryptor.decryptString(response.data as string);
+
+      remoteStatus.success = true;
     }
+  } catch (err) {
+    console.error(err);
+
+    remoteStatus.error = true;
   }
 }
 
-onMounted(loadToImport);
+onMounted(() => {
+  if (is.nonEmptyString(route.query.id)) {
+    remoteId.value = route.query.id as string;
+
+    remoteStatus.ready = true;
+  }
+});
 
 async function onDrop(file: File[] | null): Promise<void> {
   if (!file) {
@@ -83,7 +116,11 @@ function importData() {
   try {
     errorImporting.value = false;
 
-    const parsed = papa.parse<{ date: string; mood: DayMood }>(toImport.value, {
+    const parsed = papa.parse<{
+      date: string;
+      mood: DayMood;
+      comment?: string;
+    }>(toImport.value, {
       header: true,
     });
 
@@ -93,7 +130,9 @@ function importData() {
       throw new Error("missing required columns");
     }
 
-    daysMoods.value = parsed.data.map((d) => new DayData(d.date, d.mood));
+    daysMoods.value = parsed.data.map(
+      (d) => new DayData(d.date, d.mood, d.comment)
+    );
 
     importSuccess.value = true;
   } catch (err) {

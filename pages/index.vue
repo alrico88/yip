@@ -2,19 +2,21 @@
 .overflow-y-auto
   .container-lg.py-3
     year-pixels(:year="year")
-.border-top.border-2.border-dark.text-center.p-relative.mood-bg(
-  v-if="selectedDate !== null"
+.offcanvas.offcanvas-bottom.border-top.border-2.border-dark.text-center.mood-bg.p-relative.show(
+  v-if="selectedDate"
+  position="bottom"
 )
   .close-detail.w-100
     button.btn.btn-light.border.border-dark.py-1(@click="selectedDate = null") #[icon(name="bi:caret-down-fill")]
-  .container.py-3
-    .row
-      .col
-        h4.mb-0 {{ formattedDate }}
-        .lead.mb-2 Your day was:
-    .row
-      .col
-        mood-board
+  .offcanvas-header
+    .container
+      .row.pt-2
+        .col
+          h4 {{ formattedDate }}
+          .lead Your day was:
+  .offcanvas-body
+    .container
+      mood-board
 </template>
 
 <script setup lang="ts">
@@ -32,7 +34,7 @@ useHead({
 });
 
 const dataStore = useDataStore();
-const { selectedDate, year, daysMoods } = storeToRefs(dataStore);
+const { selectedDate, selectedDateData, year } = storeToRefs(dataStore);
 
 const formattedDate = computed(() =>
   dayjs(selectedDate.value).format("dddd DD, MMMM, YYYY")
@@ -41,11 +43,11 @@ const formattedDate = computed(() =>
 const selectedMoodBgColor = computed<string>(() => {
   const defaultColor = "white";
 
-  if (selectedDate.value === null) {
+  if (selectedDateData.value === null) {
     return defaultColor;
   }
 
-  const mood = daysMoods.value.find((d) => d.date === selectedDate.value)?.mood;
+  const mood = selectedDateData.value?.mood;
 
   if (!mood) {
     return defaultColor;
@@ -64,18 +66,20 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
+.mood-bg {
+  transition: background-color 0.4s ease;
+  background-color: v-bind("selectedMoodBgColor");
+  color: v-bind("selectedMoodTextColor");
+}
+
 .close-detail {
   float: left;
   position: relative;
   top: -20px;
   height: 0px;
 }
-</style>
 
-<style lang="scss" scoped>
-.mood-bg {
-  transition: background-color 0.4s ease;
-  background-color: v-bind("selectedMoodBgColor");
-  color: v-bind("selectedMoodTextColor");
+.offcanvas {
+  height: auto;
 }
 </style>

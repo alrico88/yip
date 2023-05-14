@@ -1,18 +1,20 @@
 <template lang="pug">
-td.p-0(
+td.p-0.text-center.align-middle(
   :title="tooltipContent",
   :class="cellClassNames",
   :style="cellStyle"
   @click="setDay",
   :data-day="dayAsString"
 )
-  icon(v-if="isToday", size="20px", name="fluent:calendar-today-16-regular")
+  icon.no-export(v-if="mood?.comment", name="bi:chat")
 </template>
 
 <script setup lang="ts">
 import dayjs from "dayjs";
 import { useDataStore } from "~/stores/data";
 import type { StyleValue } from "vue";
+import { DayMood } from "~/utils/enums/DayMood";
+import is from "@sindresorhus/is";
 
 const props = defineProps<{
   day: number;
@@ -55,21 +57,28 @@ const cellClassNames = computed(() => {
     "bg-light": isAfterToday.value,
     "day-forbidden": isAfterToday.value,
     "border border-3 border-dark": dayAsString.value === dataStore.selectedDate,
+    "border border-3 border-primary": isToday.value,
   };
 });
 
-const mood = eagerComputed(() => indexedDateMoods.value.get(dayAsString.value));
+const mood = eagerComputed(
+  () =>
+    indexedDateMoods.value.find(dayAsString.value) as {
+      mood: DayMood;
+      comment?: string;
+    }
+);
 
 const cellStyle = computed<StyleValue>(() => {
   if (!dayExists.value) {
     return {};
   }
 
-  if (mood === null) {
+  if (is.nullOrUndefined(mood.value)) {
     return {};
   } else {
     return {
-      backgroundColor: colorScale(Number(mood.value)) as string,
+      backgroundColor: colorScale(Number(mood.value.mood)) as string,
     };
   }
 });

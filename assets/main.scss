@@ -1,8 +1,15 @@
 $font-family-sans-serif: 'Source Sans Pro', sans-serif;
-$body-bg: #bbdde7;
 
 body, html {
-  font-size: 16px;
+  @media (max-width: 768px) {
+    font-size: 14px;
+  }
+
+  @media (min-width: 769px) {
+    font-size: 16px;
+  }
+
+  background-color: #bbdde7 !important;
 }
 
 @import 'node_modules/bootstrap/scss/bootstrap';
@@ -57,4 +64,8 @@ body, html {
 
 .table-fixed {
   table-layout: fixed;
+}
+
+.align-middle {
+  vertical-align: middle;
 }

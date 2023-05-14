@@ -55,6 +55,9 @@ const byWeekOfYear = computed<ChartData<"line", number[], string>>(() => {
       {
         label: "Average mood",
         data: data.map((d) => d.median as number),
+        backgroundColor: data.map(
+          (d) => colorScale(Number(d.median)) as string
+        ),
       },
     ],
   };

@@ -1,6 +1,6 @@
 <template lang="pug">
 button.w-100.btn.btn-light(
-  :class="{active: dayMood === mood}"
+  :class="{active}"
 )
   .vstack.gap-2
     div
@@ -16,7 +16,7 @@ import { DayMood } from "~~/utils/enums/DayMood";
 const props = defineProps<{
   icon: string;
   mood: DayMood | null;
-  dayMood: DayMood | null;
+  active: boolean;
 }>();
 
 const text = computed(() => (props.mood ? MoodTexts[props.mood] : "N/A"));

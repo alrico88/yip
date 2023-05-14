@@ -6,7 +6,7 @@ export default defineNuxtConfig({
       meta: [
         { charset: "utf-8" },
         { name: "viewport", content: "width=device-width, initial-scale=1" },
-        { name: "theme-color", content: "#bbdde7" },
+        { name: "theme-color", content: "#cedfe0" },
         { name: "author", content: "Alberto Rico" },
         {
           name: "keywords",
@@ -49,7 +49,7 @@ export default defineNuxtConfig({
     manifest: {
       name: "YiP",
       description: "Web app to track your mood throughout the year",
-      theme_color: "#bbdde7",
+      theme_color: "#cedfe0",
     },
   },
   piniaPersistedstate: {

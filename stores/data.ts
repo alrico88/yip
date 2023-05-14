@@ -1,6 +1,8 @@
 import { DayMood } from "~~/utils/enums/DayMood";
 import { DayData } from "~/utils/models/DayData";
 import { remove } from "lodash-es";
+import { FastArraySearcher } from "arr-helper-functions";
+import is from "@sindresorhus/is";
 
 export const useDataStore = defineStore(
   "dataStore",
@@ -37,19 +39,50 @@ export const useDataStore = defineStore(
       remove(daysMoods.value, (d) => d.date === date);
     }
 
-    function setDayMood(date: string, mood: DayMood): void {
-      removeDayMood(date);
+    const indexedDateMoods = computed(() => {
+      return new FastArraySearcher(daysMoods.value, "date", (d) => {
+        return {
+          mood: d.mood,
+          comment: d.comment,
+        };
+      });
+    });
 
-      daysMoods.value.push(new DayData(date, mood));
+    const selectedDateData = computed<null | DayData>(() => {
+      if (is.nullOrUndefined(selectedDate.value)) {
+        return null;
+      }
+
+      return indexedDateMoods.value.find(selectedDate.value);
+    });
+
+    function setDayMood(date: string, mood: DayMood): void {
+      const currentData: null | {
+        mood: DayMood;
+        comment?: string;
+      } = indexedDateMoods.value.find(date);
+
+      if (currentData) {
+        removeDayMood(date);
+      }
+
+      daysMoods.value.push(new DayData(date, mood, currentData?.comment));
     }
 
-    const indexedDateMoods = computed(() => {
-      return daysMoods.value.reduce((acc, item) => {
-        acc.set(item.date, item.mood);
+    function setDayComment(date: string, comment: string) {
+      const currentData: null | {
+        mood: DayMood;
+        comment?: string;
+      } = indexedDateMoods.value.find(date);
 
-        return acc;
-      }, new Map<string, DayMood>());
-    });
+      if (currentData) {
+        removeDayMood(date);
+      }
+
+      daysMoods.value.push(
+        new DayData(date, currentData?.mood ?? DayMood.Neutral, comment)
+      );
+    }
 
     return {
       daysMoods,
@@ -57,7 +90,9 @@ export const useDataStore = defineStore(
       changeSelectedDate,
       removeDayMood,
       setDayMood,
+      setDayComment,
       indexedDateMoods,
+      selectedDateData,
       year,
       increaseYear,
       increaseDisabled,

@@ -1,7 +1,10 @@
 <template lang="pug">
 .vstack.gap-2
   h4.fw-bolder.mb-0 Share
-  .form-text.mb-0 Get a link to remotely export your data. No identifiable information is stored. Links are valid for 24 hours
+  .form-text.mb-0 Get a link to remotely export your data. No identifiable information is stored. Links are valid for 24 hours. You can set a passphrase to encrypt the information.
+  .input-group.border.border-dark
+    .input-group-text Passphrase (optional)
+    input.form-control(type="text", v-model="passphrase")
   button.btn.btn-secondary.w-100(@click="saveToRemote", :disabled="loading") {{ loading ? 'Getting' : 'Get'}} share link
   .alert.alert-success.text-center.mb-0(v-if="showSaved")
     .vstack.gap-2.text-center
@@ -20,13 +23,14 @@ const props = defineProps<{
   data: string;
 }>();
 
-const config = useRuntimeConfig();
 const route = useRoute();
 
 const loading = ref(false);
 const hasError = ref(false);
 const saved = ref("");
 const asQR = ref("");
+
+const passphrase = ref("");
 
 const showSaved = computed(
   () => !hasError.value && is.nonEmptyString(saved.value)
@@ -37,10 +41,12 @@ async function saveToRemote() {
     hasError.value = false;
     loading.value = true;
 
+    const encryptor = new Encryptor(passphrase.value);
+
     const response = await $fetch("/api/store", {
       method: "POST",
       body: {
-        data: props.data,
+        data: encryptor.encryptString(props.data),
       },
     });
 
@@ -49,6 +55,8 @@ async function saveToRemote() {
     asQR.value = await QRCode.toDataURL(saved.value);
   } catch (err) {
     hasError.value = true;
+
+    console.error(err);
   } finally {
     loading.value = false;
   }

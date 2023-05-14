@@ -23,6 +23,7 @@ const { daysMoods } = storeToRefs(dataStore);
 const toExport = computed(() => {
   return papa.unparse(orderBy(daysMoods.value, "date", "asc"), {
     header: true,
+    columns: ["date", "mood", "comment"],
   });
 });
 

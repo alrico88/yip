@@ -2,7 +2,7 @@
 .row
   .col
     .card
-      .card-body.p-0.bg-white.border.border-dark(ref="tableRef")
+      .card-body.p-0.border.border-dark(ref="tableRef")
         table.table.table-sm-sm.table-bordered.text-center.mb-0
           thead.bg-light.sticky-top
             tr
@@ -31,6 +31,7 @@ import dayjs from "dayjs";
 import { toPng } from "html-to-image";
 import { saveAs } from "file-saver";
 import { h } from "hachescript";
+import { convertToDateStr } from "~/utils/dates";
 
 const props = defineProps<{
   year: number;
@@ -62,7 +63,11 @@ async function saveToImage() {
     exporting.value = true;
 
     saveAs(
-      await toPng(tableRef.value as HTMLElement),
+      await toPng(tableRef.value as HTMLElement, {
+        filter(node) {
+          return !node?.classList?.contains("no-export");
+        },
+      }),
       `year-${props.year}-in-pixels-png`
     );
   } catch (err) {

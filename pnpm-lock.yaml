@@ -55,6 +55,9 @@ dependencies:
   html-to-image:
     specifier: ^1.11.4
     version: 1.11.11
+  idb-keyval:
+    specifier: ^6.2.1
+    version: 6.2.1
   lodash-es:
     specifier: ^4.17.21
     version: 4.17.21
@@ -3245,6 +3248,10 @@ packages:
     engines: {node: '>=0.10.0'}
     dependencies:
       safer-buffer: 2.1.2
+
+  /idb-keyval@6.2.1:
+    resolution: {integrity: sha512-8Sb3veuYCyrZL+VBt9LJfZjLUPWVvqn8tG28VqYNFCo43KHcKuq+b4EiXGeuaLAQWL2YmyDgMp2aSpH9JHsEQg==}
+    dev: false
 
   /ieee754@1.2.1:
     resolution: {integrity: sha512-dcyqhDvX1C46lXZcVqCpK+FtMRQVdIMN6/Df5js2zouUsqG7I6sFxitIC+7KYK29KdXOLHdu9zL4sFnoVQnqaA==}

@@ -55,6 +55,7 @@
     "file-saver": "^2.0.5",
     "hachescript": "^1.2.0",
     "html-to-image": "^1.11.4",
+    "idb-keyval": "^6.2.1",
     "lodash-es": "^4.17.21",
     "math-helper-functions": "^2.3.0",
     "papaparse": "^5.4.1",

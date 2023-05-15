@@ -7,10 +7,10 @@
   position="bottom"
 )
   .close-detail.w-100
-    button.btn.btn-light.border.border-dark.py-1(@click="selectedDate = null") #[icon(name="bi:caret-down-fill")]
+    button.btn.btn-lg.btn-light.border.border-dark.py-1(@click="selectedDate = null") #[icon(name="bi:caret-down-fill")]
   .offcanvas-header
     .container
-      .row.pt-2
+      .row.pt-3
         .col
           h4 {{ formattedDate }}
           .lead Your day was:

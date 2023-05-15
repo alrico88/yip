@@ -6,7 +6,7 @@ td.p-0.text-center.align-middle(
   @click="setDay",
   :data-day="dayAsString"
 )
-  icon.no-export(v-if="mood?.comment", name="bi:chat")
+  icon.no-export(v-if="mood?.comment", size="15", name="bi:chat-dots")
 </template>
 
 <script setup lang="ts">

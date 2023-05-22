@@ -15,7 +15,9 @@
           icon-link(icon="logos:nuxt-icon", text="Nuxt", link="https://nuxt.com", new-tab)
         li
           icon-link(icon="logos:vue", text="Vue 3", link="https://vuejs.org", new-tab)
-      p Your data is persisted in the browsers localStorage. If you want to move to another browser / device, please export and restore your data using #[nuxt-link(to="/backup") backup].
+          li
+          icon-link(icon="bi:graph-up-arrow", text="Chart.JS", link="https://www.chartjs.org", new-tab)
+      p Your data is persisted in the browsers IndexedDB. If you want to move to another browser / device, please export and restore your data using #[nuxt-link(to="/backup") backup].
   .row
     .col
       h4.fw-bolder Copyright

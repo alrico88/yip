@@ -70,7 +70,7 @@ async function loadToImport() {
 
     const response = await $fetch("/api/store", {
       query: {
-        id: route.query.id,
+        id: remoteId.value,
       },
     });
 

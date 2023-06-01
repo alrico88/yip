@@ -27,6 +27,9 @@ export default defineNuxtConfig({
       },
     },
   },
+  appConfig: {
+    buildDate: new Date().toISOString(),
+  },
   css: [
     "@/assets/main.scss",
     "@fontsource/source-sans-pro/index.css",

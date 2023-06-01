@@ -1,5 +1,5 @@
 <template lang="pug">
-td.p-0.text-center.align-middle(
+td.p-0.text-center.align-middle.mood-cell(
   :title="tooltipContent",
   :class="cellClassNames",
   :style="cellStyle"
@@ -44,6 +44,7 @@ const tooltipContent = computed(() =>
 const today = dayjs().format(dayFormat);
 const isToday = computed(() => dayAsString.value === today);
 const isAfterToday = computed(() => dayAsString.value > today);
+const someDayIsSelected = computed(() => dataStore.selectedDate !== null);
 
 const cellClassNames = computed(() => {
   if (!dayExists.value) {
@@ -56,8 +57,9 @@ const cellClassNames = computed(() => {
     "cursor-hover": !isAfterToday.value,
     "bg-light": isAfterToday.value,
     "day-forbidden": isAfterToday.value,
-    "border border-3 border-dark": dayAsString.value === dataStore.selectedDate,
-    "border border-3 border-primary": isToday.value,
+    opacify:
+      someDayIsSelected.value && dayAsString.value !== dataStore.selectedDate,
+    "border border-primary": isToday.value,
   };
 });
 

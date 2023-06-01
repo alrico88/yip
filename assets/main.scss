@@ -9,7 +9,7 @@ body, html {
     font-size: 16px;
   }
 
-  background-color: #cedfe0 !important;
+  background-color: #ebf4f5 !important;
 }
 
 $dark: #164761;
@@ -70,4 +70,12 @@ $dark: #164761;
 
 .align-middle {
   vertical-align: middle;
+}
+
+.opacify {
+  opacity: 0.5;
+}
+
+.mood-cell {
+  transition: all 0.5s ease;
 }

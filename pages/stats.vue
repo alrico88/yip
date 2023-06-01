@@ -9,6 +9,7 @@
           stats-day-of-week(:year-data="yearData", :chart-options="commonOptions")
       stats-day-of-year(:year-data="yearData", :chart-options="commonOptions")
       stats-week-of-year(:year-data="yearData", :chart-options="commonOptions")
+      stats-month-of-year(:year-data="yearData", :chart-options="commonOptions")
 </template>
 
 <script setup lang="ts">

@@ -54,7 +54,7 @@ export default defineNuxtConfig({
     },
   },
   pwa: {
-    registerType: "autoUpdate",
+    registerType: "prompt",
     manifest: {
       name: "YiP",
       description: "Web app to track your mood throughout the year",

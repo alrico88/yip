@@ -48,6 +48,11 @@ export default defineNuxtConfig({
   experimental: {
     payloadExtraction: false,
   },
+  nitro: {
+    prerender: {
+      routes: ["/", "/about", "/backup", "/stats"],
+    },
+  },
   pwa: {
     registerType: "autoUpdate",
     manifest: {

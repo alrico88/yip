@@ -47,12 +47,9 @@ export default defineNuxtConfig({
   ],
   experimental: {
     payloadExtraction: false,
-    inlineSSRStyles: false,
-    renderJsonPayloads: true,
   },
   pwa: {
     registerType: "autoUpdate",
-    strategies: "injectManifest",
     manifest: {
       name: "YiP",
       description: "Web app to track your mood throughout the year",

@@ -6,7 +6,7 @@ export default defineNuxtConfig({
       meta: [
         { charset: "utf-8" },
         { name: "viewport", content: "width=device-width, initial-scale=1" },
-        { name: "theme-color", content: "#cedfe0" },
+        { name: "theme-color", content: "#ebf4f5" },
         { name: "author", content: "Alberto Rico" },
         {
           name: "keywords",
@@ -27,6 +27,9 @@ export default defineNuxtConfig({
       },
     },
   },
+  appConfig: {
+    buildDate: new Date().toISOString(),
+  },
   css: [
     "@/assets/main.scss",
     "@fontsource/source-sans-pro/index.css",
@@ -43,13 +46,48 @@ export default defineNuxtConfig({
       },
     ],
     "@pinia-plugin-persistedstate/nuxt",
-    "@kevinmarrec/nuxt-pwa",
+    "@vite-pwa/nuxt",
   ],
+  experimental: {
+    payloadExtraction: false,
+  },
+  nitro: {
+    prerender: {
+      routes: ["/", "/about", "/backup", "/stats"],
+    },
+  },
   pwa: {
+    registerType: "prompt",
     manifest: {
       name: "YiP",
       description: "Web app to track your mood throughout the year",
-      theme_color: "#cedfe0",
+      theme_color: "#ebf4f5",
+      icons: [
+        {
+          src: "pwa-192x192.png",
+          sizes: "192x192",
+          type: "image/png",
+        },
+        {
+          src: "pwa-512x512.png",
+          sizes: "512x512",
+          type: "image/png",
+        },
+        {
+          src: "pwa-512x512.png",
+          sizes: "512x512",
+          type: "image/png",
+          purpose: "any maskable",
+        },
+      ],
+    },
+    client: {
+      installPrompt: true,
+    },
+    workbox: {
+      navigateFallback: "/",
+      globPatterns: ["**/*.{js,css,html,png,svg,ico,woff,woff2}"],
+      cleanupOutdatedCaches: true,
     },
   },
   piniaPersistedstate: {

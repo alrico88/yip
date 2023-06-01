@@ -22,9 +22,12 @@
     .col
       h4.fw-bolder Copyright
       p © {{ new Date().getFullYear() }} #[nuxt-link(to="https//alrico.es", target="_blank") Alberto Rico]
+      p.text-muted Built: {{ daysBuilt }}
 </template>
 
 <script setup lang="ts">
+import { formatTimeAgo } from "@vueuse/core";
+
 useHead({
   title: "About - YiP (Year in Pixels)",
   meta: [
@@ -34,4 +37,8 @@ useHead({
     },
   ],
 });
+
+const date = useAppConfig();
+
+const daysBuilt = formatTimeAgo(new Date(date.buildDate));
 </script>

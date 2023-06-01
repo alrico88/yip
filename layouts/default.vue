@@ -10,6 +10,11 @@
       c-navbar-toggler(@click="showNavbar = !showNavbar")
       c-collapse.navbar-collapse(:visible="showNavbar")
         c-navbar-nav.ms-auto
+          c-nav-item(v-if="$pwa.needRefresh")
+            c-button(
+              color="primary", 
+              @click="$pwa.updateServiceWorker()"
+            ) #[icon(name="bi:repeat")] Update available
           c-nav-item(v-for="nav of navigation", :key="nav.link")
             icon-link.nav-link(:link="nav.link", :icon="nav.icon", :text="nav.text")
   slot
@@ -23,6 +28,7 @@ import {
   CNavbarToggler,
   CNavbarNav,
   CNavItem,
+  CButton,
 } from "@coreui/bootstrap-vue";
 
 const showNavbar = ref(false);
@@ -49,6 +55,15 @@ const navigation = [
     text: "About",
   },
 ];
+
+const { $pwa } = useNuxtApp();
+
+watch(
+  () => $pwa.offlineReady,
+  () => {
+    console.log("ready to work offline");
+  }
+);
 </script>
 
 <style lang="scss" scoped>

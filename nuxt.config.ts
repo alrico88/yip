@@ -45,8 +45,14 @@ export default defineNuxtConfig({
     "@pinia-plugin-persistedstate/nuxt",
     "@vite-pwa/nuxt",
   ],
+  experimental: {
+    payloadExtraction: false,
+    inlineSSRStyles: false,
+    renderJsonPayloads: true,
+  },
   pwa: {
-    registerType: "prompt",
+    registerType: "autoUpdate",
+    strategies: "injectManifest",
     manifest: {
       name: "YiP",
       description: "Web app to track your mood throughout the year",
@@ -76,6 +82,7 @@ export default defineNuxtConfig({
     workbox: {
       navigateFallback: "/",
       globPatterns: ["**/*.{js,css,html,png,svg,ico}"],
+      cleanupOutdatedCaches: true,
     },
   },
   piniaPersistedstate: {

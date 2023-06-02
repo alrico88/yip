@@ -3,15 +3,15 @@
   .col
     .card
       .card-body.p-0.border.border-dark(ref="tableRef")
-        table.table.table-sm-sm.table-bordered.text-center.mb-0
+        table.table.table-sm.table-bordered.text-center.mb-0.align-middle
           thead.bg-light.sticky-top
             tr
-              th.align-middle
+              th
                 .text-small.text-muted.d-none.d-md-block Day
-              th(v-for="i of months", v-html="getMonthName(i - 1)")
-          tbody.align-middle
+              th(v-for="i of months", v-html="getMonthName(i - 1)", :class="{'table-active': parsedSelectedDate?.month === i}")
+          tbody
             tr(v-for="day of 31")
-              td.table-light
+              td.table-light(:class="{'table-active': parsedSelectedDate?.day === day}")
                 .clamper {{ day }}
               mood-cell(
                 v-for="month of months",
@@ -32,6 +32,9 @@ import { toPng } from "html-to-image";
 import { saveAs } from "file-saver";
 import { h } from "hachescript";
 import { convertToDateStr } from "~/utils/dates";
+import { useDataStore } from "~/stores/data";
+
+const dataStore = useDataStore();
 
 const props = defineProps<{
   year: number;
@@ -76,6 +79,21 @@ async function saveToImage() {
     exporting.value = false;
   }
 }
+
+const parsedSelectedDate = computed(() => {
+  const date = dataStore.selectedDate;
+
+  if (date) {
+    const parsed = dayjs(date);
+
+    return {
+      day: parsed.date(),
+      month: parsed.month() + 1,
+    };
+  } else {
+    return null;
+  }
+});
 </script>
 
 <style lang="scss" scoped>

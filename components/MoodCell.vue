@@ -6,7 +6,8 @@ td.p-0.text-center.align-middle.mood-cell(
   @click="setDay",
   :data-day="dayAsString"
 )
-  icon.no-export(v-if="mood?.comment", size="15", name="bi:chat-dots")
+  .hstack.gap-1.w-100.justify-content-center
+    icon.no-export(v-if="mood?.comment", size="15", name="bi:chat-dots")
 </template>
 
 <script setup lang="ts">
@@ -42,9 +43,9 @@ const tooltipContent = computed(() =>
 );
 
 const today = dayjs().format(dayFormat);
-const isToday = computed(() => dayAsString.value === today);
 const isAfterToday = computed(() => dayAsString.value > today);
 const someDayIsSelected = computed(() => dataStore.selectedDate !== null);
+const isSelected = computed(() => dayAsString.value === dataStore.selectedDate);
 
 const cellClassNames = computed(() => {
   if (!dayExists.value) {
@@ -55,11 +56,10 @@ const cellClassNames = computed(() => {
 
   return {
     "cursor-hover": !isAfterToday.value,
-    "bg-light": isAfterToday.value,
+    "in-future": isAfterToday.value,
     "day-forbidden": isAfterToday.value,
-    opacify:
-      someDayIsSelected.value && dayAsString.value !== dataStore.selectedDate,
-    "border border-primary": isToday.value,
+    opacify: someDayIsSelected.value && !isSelected.value,
+    "selected-day": isSelected.value,
   };
 });
 
@@ -96,7 +96,21 @@ function setDay(): void {
 
 <style lang="scss" scoped>
 .invalid-day {
-  background-color: #f7f7f7;
-  background-image: url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23c8c8c8' fill-opacity='0.4' fill-rule='evenodd'%3E%3Ccircle cx='3' cy='3' r='3'/%3E%3Ccircle cx='13' cy='13' r='3'/%3E%3C/g%3E%3C/svg%3E");
+  background: repeating-linear-gradient(
+    135deg,
+    #060606 0,
+    #060606 10%,
+    transparent 0,
+    transparent 50%
+  );
+  background-size: 1em 1em;
+  background-color: #ffffff;
+  opacity: 0.1;
+}
+
+.selected-day {
+  background: radial-gradient(circle, #06121e 10%, transparent 5%);
+  background-size: 1em 1em;
+  background-repeat: repeat;
 }
 </style>

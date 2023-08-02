@@ -21,10 +21,14 @@ const props = defineProps<{
   day: number;
   month: number;
   year: number;
+  isSelected: boolean;
+  mood?: {
+    mood: DayMood;
+    comment: string;
+  };
 }>();
 
 const dataStore = useDataStore();
-const { indexedDateMoods } = storeToRefs(dataStore);
 
 const dayExists = computed(() => {
   return (
@@ -44,8 +48,6 @@ const tooltipContent = computed(() =>
 
 const today = dayjs().format(dayFormat);
 const isAfterToday = computed(() => dayAsString.value > today);
-const someDayIsSelected = computed(() => dataStore.selectedDate !== null);
-const isSelected = computed(() => dayAsString.value === dataStore.selectedDate);
 
 const cellClassNames = computed(() => {
   if (!dayExists.value) {
@@ -58,29 +60,20 @@ const cellClassNames = computed(() => {
     "cursor-hover": !isAfterToday.value,
     "in-future": isAfterToday.value,
     "day-forbidden": isAfterToday.value,
-    opacify: someDayIsSelected.value && !isSelected.value,
-    "selected-day": isSelected.value,
+    "selected-day": props.isSelected,
   };
 });
-
-const mood = eagerComputed(
-  () =>
-    indexedDateMoods.value.find(dayAsString.value) as {
-      mood: DayMood;
-      comment?: string;
-    }
-);
 
 const cellStyle = computed<StyleValue>(() => {
   if (!dayExists.value) {
     return {};
   }
 
-  if (is.nullOrUndefined(mood.value)) {
+  if (is.nullOrUndefined(props.mood)) {
     return {};
   } else {
     return {
-      backgroundColor: colorScale(Number(mood.value.mood)) as string,
+      backgroundColor: colorScale(Number(props.mood.mood)) as string,
     };
   }
 });

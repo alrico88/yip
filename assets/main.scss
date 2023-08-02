@@ -1,5 +1,9 @@
 $font-family-sans-serif: 'Source Sans Pro', sans-serif;
 
+:root {
+  --bottom-sheet-max-width: 800px;
+}
+
 body, html {
   @media (max-width: 768px) {
     font-size: 14px;
@@ -82,4 +86,13 @@ $dark: #164761;
 
 .in-future {
   background-color: #eeeeee !important;
+}
+
+.bottom-sheet {
+  transition: background-color 0.4s ease;
+  color: var(--bottom-sheet-text-color)
+}
+
+.bottom-sheet-backdrop {
+  z-index: 1021;
 }

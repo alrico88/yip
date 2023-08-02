@@ -10,7 +10,7 @@
                 .text-small.text-muted.d-none.d-md-block Day
               th(v-for="i of months", v-html="getMonthName(i - 1)", :class="{'table-active': parsedSelectedDate?.month === i}")
           tbody
-            tr(v-for="day of 31")
+            tr(v-for="day of days")
               td.table-light(:class="{'table-active': parsedSelectedDate?.day === day}")
                 .clamper {{ day }}
               mood-cell(
@@ -18,7 +18,9 @@
                 :key="convertToDateStr(day, month, year)",
                 :day="day",
                 :month="month",
-                :year="year"
+                :year="year",
+                :is-selected="selectedDate === convertToDateStr(day, month, year)",
+                :mood="indexedDateMoods.find(convertToDateStr(day, month, year))"
               )
       .card-footer.border.border-dark
         button.btn.btn-primary.w-100(@click="saveToImage", :disabled="exporting")
@@ -35,12 +37,14 @@ import { convertToDateStr } from "~/utils/dates";
 import { useDataStore } from "~/stores/data";
 
 const dataStore = useDataStore();
+const { selectedDate, indexedDateMoods } = storeToRefs(dataStore);
 
 const props = defineProps<{
   year: number;
 }>();
 
 const months = 12;
+const days = 31;
 
 function getMonthName(month: number): string {
   const name = dayjs().set("month", month).format("MMM");

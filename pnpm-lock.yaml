@@ -28,6 +28,9 @@ dependencies:
   bootstrap:
     specifier: 5.3.0-alpha1
     version: 5.3.0-alpha1(@popperjs/core@2.11.8)
+  bottom-sheet-vue3:
+    specifier: ^2.0.5
+    version: 2.0.5(vue@3.3.4)
   chart.js:
     specifier: ^4.3.2
     version: 4.3.2
@@ -3506,6 +3509,14 @@ packages:
       '@popperjs/core': ^2.11.6
     dependencies:
       '@popperjs/core': 2.11.8
+    dev: false
+
+  /bottom-sheet-vue3@2.0.5(vue@3.3.4):
+    resolution: {integrity: sha512-OtK+Ti6kfqh+MXiQREeQ8+Fd7Bow5vewCF+B0U1r1McCNKID+N+upcVIWQPCzcUKRLjS/WIJV/rEfX+4IQ1BQQ==}
+    peerDependencies:
+      vue: ^3.2.45
+    dependencies:
+      vue: 3.3.4
     dev: false
 
   /brace-expansion@1.1.11:

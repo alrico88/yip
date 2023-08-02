@@ -2,26 +2,23 @@
 .overflow-y-auto
   .container-lg.py-3
     year-pixels(:year="year")
-.offcanvas.offcanvas-bottom.border-top.border-2.border-dark.text-center.mood-bg.p-relative.show(
-  v-if="selectedDate"
-  position="bottom"
+sheet.mood-bg(
+  v-model:visible="showSlideover", 
+  :style="sheetStyle",
+  :only-header-swipe="true"
 )
-  .close-detail.w-100
-    button.btn.btn-lg.btn-light.border.border-dark.py-1(@click="selectedDate = null") #[icon(name="bi:caret-down-fill")]
-  .offcanvas-header
-    .container
-      .row.pt-3
-        .col
-          h4 {{ formattedDate }}
-          .lead Your day was:
-  .offcanvas-body
-    .container
-      mood-board
+  .container.py-3
+    .row.text-center.pb-3
+      .col
+        h4 {{ formattedDate }}
+        .lead.mb-o Your day was:
+    mood-board
 </template>
 
 <script setup lang="ts">
 import { useDataStore } from "~/stores/data";
 import dayjs from "dayjs";
+import { Sheet } from "bottom-sheet-vue3";
 
 useHead({
   title: "YiP (Year in Pixels)",
@@ -35,6 +32,16 @@ useHead({
 
 const dataStore = useDataStore();
 const { selectedDate, selectedDateData, year } = storeToRefs(dataStore);
+const showSlideover = computed({
+  get() {
+    return selectedDate.value !== null;
+  },
+  set(val) {
+    if (!val) {
+      selectedDate.value = null;
+    }
+  },
+});
 
 const formattedDate = computed(() =>
   dayjs(selectedDate.value).format("dddd DD, MMMM, YYYY")
@@ -63,23 +70,11 @@ const selectedMoodTextColor = computed(() =>
 onMounted(() => {
   selectedDate.value = null;
 });
+
+const sheetStyle = computed(() => {
+  return {
+    "--bottom-sheet-bakground-color": selectedMoodBgColor.value,
+    "--bottom-sheet-text-color": selectedMoodTextColor.value,
+  };
+});
 </script>
-
-<style lang="scss" scoped>
-.mood-bg {
-  transition: background-color 0.4s ease;
-  background-color: v-bind("selectedMoodBgColor");
-  color: v-bind("selectedMoodTextColor");
-}
-
-.close-detail {
-  float: left;
-  position: relative;
-  top: -20px;
-  height: 0px;
-}
-
-.offcanvas {
-  height: auto;
-}
-</style>

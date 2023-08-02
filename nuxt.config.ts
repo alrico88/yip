@@ -35,6 +35,7 @@ export default defineNuxtConfig({
     "@fontsource/source-sans-pro/index.css",
     "@fontsource/source-sans-pro/600.css",
     "@fontsource/source-sans-pro/700.css",
+    "bottom-sheet-vue3/style.css",
   ],
   modules: [
     "nuxt-icon",

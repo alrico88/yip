@@ -1,6 +1,6 @@
 <template lang="pug">
-.row
-  .col
+.row.justify-content-center
+  .col-xl-6
     .card
       .card-body.p-0.border.border-dark(ref="tableRef")
         table.table.table-sm.table-bordered.text-center.mb-0.align-middle

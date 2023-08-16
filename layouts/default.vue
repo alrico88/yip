@@ -31,7 +31,13 @@ import {
   CButton,
 } from "@coreui/bootstrap-vue";
 
+const router = useRouter();
+
 const showNavbar = ref(false);
+
+router.afterEach(() => {
+  showNavbar.value = false
+})
 
 const navigation = [
   {

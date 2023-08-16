@@ -13,10 +13,12 @@ body, html {
     font-size: 16px;
   }
 
-  background-color: #ebf4f5 !important;
+  background-color: #e0e7ff !important;
 }
 
 $dark: #164761;
+$primary: #3730a3;
+$success: #256d5a;
 
 @import 'node_modules/bootstrap/scss/bootstrap';
 

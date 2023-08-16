@@ -6,7 +6,7 @@ export default defineNuxtConfig({
       meta: [
         { charset: "utf-8" },
         { name: "viewport", content: "width=device-width, initial-scale=1" },
-        { name: "theme-color", content: "#ebf4f5" },
+        { name: "theme-color", content: "#e0e7ff" },
         { name: "author", content: "Alberto Rico" },
         {
           name: "keywords",
@@ -62,7 +62,7 @@ export default defineNuxtConfig({
     manifest: {
       name: "YiP",
       description: "Web app to track your mood throughout the year",
-      theme_color: "#ebf4f5",
+      theme_color: "#e0e7ff",
       icons: [
         {
           src: "pwa-192x192.png",

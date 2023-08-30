@@ -18,15 +18,26 @@
           li
           icon-link(icon="bi:graph-up-arrow", text="Chart.JS", link="https://www.chartjs.org", new-tab)
       p Your data is persisted in the browsers IndexedDB. If you want to move to another browser / device, please export and restore your data using #[nuxt-link(to="/backup") backup].
+  .row.mb-2
+    .col
+      h4.fw-bolder Seed data
+      .hstack.gap-2.align-items-center
+        div
+          button.btn.btn-warning(
+            @click="generateRandomData",
+            :disabled="generated",
+          ) #[icon(name="mdi:dice-3-outline")] {{ generated ? 'Done!' : 'Generate random data' }}
+        .text-danger Caution: it will overwrite your selected year
   .row
     .col
       h4.fw-bolder Copyright
-      p © {{ new Date().getFullYear() }} #[nuxt-link(to="https//alrico.es", target="_blank") Alberto Rico]
+      p © {{ new Date().getFullYear() }} #[nuxt-link(to="https://alrico.es", target="_blank") Alberto Rico]
       p.text-muted Built: {{ daysBuilt }}
 </template>
 
 <script setup lang="ts">
 import { formatTimeAgo } from "@vueuse/core";
+import { useDataStore } from "~/stores/data";
 
 useHead({
   title: "About - YiP (Year in Pixels)",
@@ -41,4 +52,14 @@ useHead({
 const date = useAppConfig();
 
 const daysBuilt = formatTimeAgo(new Date(date.buildDate));
+
+const store = useDataStore();
+
+const generated = autoResetRef(false, 3000);
+
+function generateRandomData() {
+  generated.value = true;
+
+  store.generateRandomData();
+}
 </script>

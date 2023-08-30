@@ -4,6 +4,8 @@ import { remove } from "lodash-es";
 import { FastArraySearcher } from "arr-helper-functions";
 import is from "@sindresorhus/is";
 import { persistedRef } from "~/composables/persistedRef";
+import Chooser from "random-seed-weighted-chooser";
+import dayjs from "dayjs";
 
 export const useDataStore = defineStore("dataStore", () => {
   const {
@@ -13,7 +15,7 @@ export const useDataStore = defineStore("dataStore", () => {
   } = useCounter(new Date().getFullYear());
 
   const increaseDisabled = computed(
-    () => year.value === new Date().getFullYear()
+    () => year.value === new Date().getFullYear(),
   );
 
   const daysMoods = persistedRef<DayData[]>([], "daysMoods");
@@ -75,7 +77,7 @@ export const useDataStore = defineStore("dataStore", () => {
     }
 
     daysMoods.value.push(
-      new DayData(date, currentData?.mood ?? DayMood.Neutral, comment)
+      new DayData(date, currentData?.mood ?? DayMood.Neutral, comment),
     );
   }
 
@@ -96,6 +98,30 @@ export const useDataStore = defineStore("dataStore", () => {
 
   onMounted(runMigrationToIndexedDB);
 
+  function generateRandomData() {
+    const weights = [10, 30, 30, 20, 10];
+
+    const moodsToAdd: DayData[] = [];
+
+    let day = dayjs().year(year.value).startOf("year");
+
+    while (day.year() === year.value) {
+      moodsToAdd.push({
+        date: day.format(dayFormat),
+        mood: Object.values(DayMood)[Chooser.chooseWeightedIndex(weights)],
+        comment: "",
+      });
+
+      day = day.add(1, "day");
+    }
+
+    const withoutCurrentYear = daysMoods.value.filter((d) => {
+      return dayjs(d.date).year() !== year.value;
+    });
+
+    daysMoods.value = [...withoutCurrentYear, ...moodsToAdd];
+  }
+
   return {
     daysMoods,
     selectedDate,
@@ -109,5 +135,6 @@ export const useDataStore = defineStore("dataStore", () => {
     increaseYear,
     increaseDisabled,
     decreaseYear,
+    generateRandomData,
   };
 });

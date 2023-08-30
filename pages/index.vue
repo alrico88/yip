@@ -8,10 +8,25 @@ sheet.mood-bg(
   :only-header-swipe="true"
 )
   .container.py-3
-    .row.text-center.pb-3
-      .col
+    .row.text-center.pb-3.align-items-center
+      .col-2.justify-content-center
+        button.btn.btn-light.btn-lg(
+          type="button", 
+          @click="dataStore.previousDay()",
+          title="Previous day"
+        )
+          icon(name="bi:arrow-left")
+      .col-8
         h4 {{ formattedDate }}
         .lead.mb-o Your day was:
+      .col-2.justify-content-center
+        button.btn.btn-light.btn-lg(
+          type="button", 
+          @click="dataStore.nextDay()",
+          title="Next day",
+          :disabled="!canGoNext"
+        )
+          icon(name="bi:arrow-right")
     mood-board
 </template>
 
@@ -44,7 +59,7 @@ const showSlideover = computed({
 });
 
 const formattedDate = computed(() =>
-  dayjs(selectedDate.value).format("dddd DD, MMMM, YYYY")
+  dayjs(selectedDate.value).format("dddd DD, MMMM, YYYY"),
 );
 
 const selectedMoodBgColor = computed<string>(() => {
@@ -64,7 +79,7 @@ const selectedMoodBgColor = computed<string>(() => {
 });
 
 const selectedMoodTextColor = computed(() =>
-  getGoodContrastColor(selectedMoodBgColor.value)
+  getGoodContrastColor(selectedMoodBgColor.value),
 );
 
 onMounted(() => {
@@ -77,4 +92,8 @@ const sheetStyle = computed(() => {
     "--bottom-sheet-text-color": selectedMoodTextColor.value,
   };
 });
+
+const canGoNext = computed(() =>
+  dayjs(selectedDate.value).isBefore(dayjs().startOf("day")),
+);
 </script>

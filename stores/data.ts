@@ -22,6 +22,22 @@ export const useDataStore = defineStore("dataStore", () => {
 
   const selectedDate = ref<null | string>(null);
 
+  function previousDay() {
+    if (selectedDate.value) {
+      selectedDate.value = dayjs(selectedDate.value)
+        .subtract(1, "day")
+        .format(dayFormat);
+    }
+  }
+
+  function nextDay() {
+    if (selectedDate.value) {
+      selectedDate.value = dayjs(selectedDate.value)
+        .add(1, "day")
+        .format(dayFormat);
+    }
+  }
+
   function changeSelectedDate(day: number, month: number, year: number): void {
     const asStr = convertToDateStr(day, month, year);
 
@@ -125,6 +141,8 @@ export const useDataStore = defineStore("dataStore", () => {
   return {
     daysMoods,
     selectedDate,
+    previousDay,
+    nextDay,
     changeSelectedDate,
     removeDayMood,
     setDayMood,

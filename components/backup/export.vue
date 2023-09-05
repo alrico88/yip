@@ -18,12 +18,22 @@ import papa from "papaparse";
 import { saveAs } from "file-saver";
 
 const dataStore = useDataStore();
-const { daysMoods } = storeToRefs(dataStore);
+const { daysMoods, privateMode } = storeToRefs(dataStore);
+
+const columnsToExport = computed(() => {
+  const cols = ["date", "mood"];
+
+  if (!privateMode.value) {
+    cols.push("comment");
+  }
+
+  return cols;
+});
 
 const toExport = computed(() => {
   return papa.unparse(orderBy(daysMoods.value, "date", "asc"), {
     header: true,
-    columns: ["date", "mood", "comment"],
+    columns: columnsToExport.value,
   });
 });
 

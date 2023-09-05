@@ -28,6 +28,19 @@
             :disabled="generated",
           ) #[icon(name="mdi:dice-3-outline")] {{ generated ? 'Done!' : 'Generate random data' }}
         .text-danger Caution: it will overwrite your selected year
+  .row.mb-2
+    .col
+      h4.fw-bolder Private mode
+      .vstack.gap-2
+        div Prevent showing or exporting comments by toggling private mode on.
+        div
+          .form-check.w-auto
+            input.form-check-input(
+              type="checkbox" 
+              id="privateMode",
+              v-model="privateMode"
+            )
+            label.form-check-label(for="privateMode") Use private mode
   .row
     .col
       h4.fw-bolder Copyright
@@ -54,6 +67,7 @@ const date = useAppConfig();
 const daysBuilt = formatTimeAgo(new Date(date.buildDate));
 
 const store = useDataStore();
+const { privateMode } = storeToRefs(store);
 
 const generated = autoResetRef(false, 3000);
 

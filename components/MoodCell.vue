@@ -6,7 +6,7 @@ td.p-0.text-center.align-middle.mood-cell(
   @click="setDay",
   :data-day="dayAsString"
 )
-  .hstack.gap-1.w-100.justify-content-center
+  .hstack.gap-1.w-100.justify-content-center(v-if="!privateMode")
     icon.no-export(v-if="mood?.comment", size="15", name="bi:chat-dots")
 </template>
 
@@ -29,6 +29,7 @@ const props = defineProps<{
 }>();
 
 const dataStore = useDataStore();
+const { privateMode } = storeToRefs(dataStore);
 
 const dayExists = computed(() => {
   return (
@@ -40,10 +41,10 @@ const dayExists = computed(() => {
 });
 
 const dayAsString = computed(() =>
-  convertToDateStr(props.day, props.month, props.year)
+  convertToDateStr(props.day, props.month, props.year),
 );
 const tooltipContent = computed(() =>
-  dayjs(dayAsString.value).format("ddd DD, MMMM YYYY")
+  dayjs(dayAsString.value).format("ddd DD, MMMM YYYY"),
 );
 
 const today = dayjs().format(dayFormat);

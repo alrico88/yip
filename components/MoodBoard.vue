@@ -43,7 +43,7 @@
         icon="gg:smile-no-mouth",
         @click="removeDayMood"
       )
-  .row
+  .row(v-if="!privateMode")
     .col
       .input-group
         .input-group-text Comments
@@ -59,7 +59,7 @@ import { DayMood } from "~/utils/enums/DayMood";
 import { useDataStore } from "~/stores/data";
 
 const dataStore = useDataStore();
-const { selectedDate, selectedDateData } = storeToRefs(dataStore);
+const { selectedDate, selectedDateData, privateMode } = storeToRefs(dataStore);
 
 function applyDayMood(mood: DayMood): void {
   dataStore.setDayMood(selectedDate.value as string, mood);
@@ -74,7 +74,7 @@ const dayMood = computed(() => selectedDateData.value?.mood ?? null);
 function handleCommentInput(e: Event) {
   dataStore.setDayComment(
     selectedDate.value as string,
-    (e.target as HTMLTextAreaElement).value
+    (e.target as HTMLTextAreaElement).value,
   );
 }
 </script>

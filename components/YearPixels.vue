@@ -75,7 +75,7 @@ async function saveToImage() {
           return !node?.classList?.contains("no-export");
         },
       }),
-      `year-${props.year}-in-pixels-png`
+      `year-${props.year}-in-pixels-png`,
     );
   } catch (err) {
     console.error(err);

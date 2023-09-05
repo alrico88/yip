@@ -138,6 +138,8 @@ export const useDataStore = defineStore("dataStore", () => {
     daysMoods.value = [...withoutCurrentYear, ...moodsToAdd];
   }
 
+  const privateMode = ref(false);
+
   return {
     daysMoods,
     selectedDate,
@@ -154,5 +156,6 @@ export const useDataStore = defineStore("dataStore", () => {
     increaseDisabled,
     decreaseYear,
     generateRandomData,
+    privateMode,
   };
 });

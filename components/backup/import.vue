@@ -131,7 +131,7 @@ function importData() {
     }
 
     daysMoods.value = parsed.data.map(
-      (d) => new DayData(d.date, d.mood, d.comment)
+      (d) => new DayData(d.date, d.mood, d.comment),
     );
 
     importSuccess.value = true;
@@ -149,6 +149,6 @@ const { isOverDropZone } = useDropZone(dropzoneRef, onDrop);
 const importPlaceholder = computed(() =>
   isOverDropZone.value
     ? "Drop the file"
-    : "Paste the backup or drag and drop a file"
+    : "Paste the backup or drag and drop a file",
 );
 </script>

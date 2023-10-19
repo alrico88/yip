@@ -53,11 +53,14 @@ export const useDataStore = defineStore("dataStore", () => {
   }
 
   const indexedDateMoods = computed(() => {
-    return new FastArraySearcher(daysMoods.value, "date", (d) => {
-      return {
-        mood: d.mood,
-        comment: d.comment,
-      };
+    return new FastArraySearcher(daysMoods.value, {
+      indexGetter: "date",
+      valueGetter: (d) => {
+        return {
+          mood: d.mood,
+          comment: d.comment,
+        };
+      },
     });
   });
 

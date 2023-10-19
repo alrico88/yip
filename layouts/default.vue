@@ -36,8 +36,8 @@ const router = useRouter();
 const showNavbar = ref(false);
 
 router.afterEach(() => {
-  showNavbar.value = false
-})
+  showNavbar.value = false;
+});
 
 const navigation = [
   {
@@ -68,7 +68,7 @@ watch(
   () => $pwa.offlineReady,
   () => {
     console.log("ready to work offline");
-  }
+  },
 );
 </script>
 

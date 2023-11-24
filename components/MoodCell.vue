@@ -6,8 +6,9 @@ td.p-0.text-center.align-middle.mood-cell(
   @click="setDay",
   :data-day="dayAsString"
 )
-  .hstack.gap-1.w-100.justify-content-center(v-if="!privateMode")
-    icon.no-export(v-if="mood?.comment", size="15", name="bi:chat-dots")
+  .hstack.gap-1.w-100.justify-content-center
+    icon.no-export(v-if="isSelected", size="15", name="fa:crosshairs")
+    icon.no-export(v-if="showComment", size="15", name="bi:chat-dots")
 </template>
 
 <script setup lang="ts">
@@ -30,6 +31,10 @@ const props = defineProps<{
 
 const dataStore = useDataStore();
 const { privateMode } = storeToRefs(dataStore);
+
+const showComment = computed(
+  () => !props.isSelected && props.mood?.comment && !privateMode.value,
+);
 
 const dayExists = computed(() => {
   return (
@@ -100,11 +105,5 @@ function setDay(): void {
   background-size: 1em 1em;
   background-color: #ffffff;
   opacity: 0.1;
-}
-
-.selected-day {
-  background: radial-gradient(circle, #06121e 10%, transparent 5%);
-  background-size: 1em 1em;
-  background-repeat: repeat;
 }
 </style>

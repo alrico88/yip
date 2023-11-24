@@ -34,7 +34,7 @@ const props = defineProps<{
 
 const byDayOfWeek = computed<ChartData<"bar", number[], string>>(() => {
   const grouped = groupBy(props.yearData, (d) =>
-    dayjs(d.date).day().toString()
+    dayjs(d.date).day().toString(),
   );
 
   const data = orderBy(
@@ -45,7 +45,7 @@ const byDayOfWeek = computed<ChartData<"bar", number[], string>>(() => {
       };
     }),
     "dayOfWeek",
-    "asc"
+    "asc",
   ).map((d) => {
     return {
       ...d,
@@ -60,7 +60,7 @@ const byDayOfWeek = computed<ChartData<"bar", number[], string>>(() => {
         label: "Average mood",
         data: data.map((d) => d.median as number),
         backgroundColor: data.map(
-          (d) => colorScale(d.median as number) as string
+          (d) => colorScale(d.median as number) as string,
         ),
       },
     ],

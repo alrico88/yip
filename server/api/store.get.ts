@@ -1,4 +1,4 @@
-import { dataStore } from '~~/utils/storage';
+import { dataStore } from "~~/utils/storage";
 
 export default defineEventHandler(async (event) => {
   const { id } = getQuery(event);

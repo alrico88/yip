@@ -4,7 +4,8 @@ $font-family-sans-serif: 'Source Sans Pro', sans-serif;
   --bottom-sheet-max-width: 800px;
 }
 
-body, html {
+body,
+html {
   @media (max-width: 768px) {
     font-size: 14px;
   }
@@ -13,12 +14,12 @@ body, html {
     font-size: 16px;
   }
 
-  background-color: #e0e7ff !important;
+  background-color: #fcf8f4 !important;
 }
 
 $dark: #164761;
 $primary: #3730a3;
-$success: #256d5a;
+$success: #205C63;
 
 @import 'node_modules/bootstrap/scss/bootstrap';
 
@@ -40,7 +41,7 @@ $success: #256d5a;
 
 .day-forbidden {
   &:hover {
-    cursor: no-drop
+    cursor: no-drop;
   }
 }
 
@@ -87,12 +88,12 @@ $success: #256d5a;
 }
 
 .in-future {
-  background-color: #eeeeee !important;
+  background-color: #fafcfd !important;
 }
 
 .bottom-sheet {
   transition: background-color 0.4s ease;
-  color: var(--bottom-sheet-text-color)
+  color: var(--bottom-sheet-text-color);
 }
 
 .bottom-sheet-backdrop {

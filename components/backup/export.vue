@@ -2,7 +2,6 @@
 .vstack.gap-2
   h4.fw-bolder.mb-0 Export / Backup
   .form-text #[b.text-primary -2]: Awful, #[b.text-primary -1]: Bad, #[b.text-primary 0]: Neutral, #[b.text-primary 1]: Good, #[b.text-primary 2]: Great
-  textarea.form-control.bg-light.border.border-dark(v-model="toExport", :rows="10", readonly)
   .hstack.gap-2
     copy-to-clip.w-100(:to-copy="toExport")
     button.w-100.btn.btn-success(@click="saveToFile")

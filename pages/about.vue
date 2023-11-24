@@ -72,8 +72,10 @@ const { privateMode } = storeToRefs(store);
 const generated = autoResetRef(false, 3000);
 
 function generateRandomData() {
-  generated.value = true;
+  if (confirm("Are you sure? It will overwrite your current year's data")) {
+    generated.value = true;
 
-  store.generateRandomData();
+    store.generateRandomData();
+  }
 }
 </script>

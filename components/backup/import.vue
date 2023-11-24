@@ -8,8 +8,7 @@
     :placeholder="importPlaceholder",
     ref="dropzoneRef"
   )
-  .border.border-dark.p-2
-    c-form-input(type="file", accept=".csv", size="sm", @input="handleFile")
+  c-form-input.border.border-dark(type="file", accept=".csv", size="sm", @input="handleFile")
   div
     .alert.alert-danger.d-block.mb-0(v-if="errorImporting") Error importing data
     template(v-if="importSuccess")

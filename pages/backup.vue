@@ -1,6 +1,6 @@
 <template lang="pug">
 .container.py-3
-  .row.row-cols-lg-2.row-cols-1.g-3
+  .row.row-cols-1.g-3
     .col
       backup-export
     .col

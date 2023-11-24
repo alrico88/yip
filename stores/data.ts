@@ -141,7 +141,15 @@ export const useDataStore = defineStore("dataStore", () => {
     daysMoods.value = [...withoutCurrentYear, ...moodsToAdd];
   }
 
-  const privateMode = ref(false);
+  const privateModeRef = persistedRef("privateMode", "false");
+  const privateMode = computed({
+    get() {
+      return privateModeRef.value === "true";
+    },
+    set(val: boolean) {
+      privateModeRef.value = val.toString();
+    },
+  });
 
   return {
     daysMoods,

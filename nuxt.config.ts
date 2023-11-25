@@ -6,7 +6,7 @@ export default defineNuxtConfig({
       meta: [
         { charset: "utf-8" },
         { name: "viewport", content: "width=device-width, initial-scale=1" },
-        { name: "theme-color", content: "#e0e7ff" },
+        { name: "theme-color", content: "#fcf8f4" },
         { name: "author", content: "Alberto Rico" },
         {
           name: "keywords",
@@ -53,9 +53,18 @@ export default defineNuxtConfig({
   experimental: {
     payloadExtraction: false,
   },
-  nitro: {
-    prerender: {
-      routes: ["/", "/about", "/backup", "/stats"],
+  routeRules: {
+    "/": {
+      prerender: true,
+    },
+    "/stats": {
+      prerender: true,
+    },
+    "/backup": {
+      prerender: true,
+    },
+    "/about": {
+      prerender: true,
     },
   },
   pwa: {
@@ -63,7 +72,7 @@ export default defineNuxtConfig({
     manifest: {
       name: "YiP",
       description: "Web app to track your mood throughout the year",
-      theme_color: "#e0e7ff",
+      theme_color: "#fcf8f4",
       icons: [
         {
           src: "pwa-192x192.png",

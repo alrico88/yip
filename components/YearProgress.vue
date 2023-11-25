@@ -1,5 +1,5 @@
 <template lang="pug">
-.card.rounded.border.border-dark
+.card.rounded.border
   .card-body
     table.table.table-borderless.align-middle.mb-0
       tbody

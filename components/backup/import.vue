@@ -2,13 +2,17 @@
 .vstack.gap-2
   h4.fw-bolder.mb-0 Import
   .form-text Restore data from another computer or browser
-  textarea.form-control.border.border-dark(
+  b-form-textarea(
     v-model="toImport", 
     :rows="10", 
     :placeholder="importPlaceholder",
     ref="dropzoneRef"
   )
-  c-form-input.border.border-dark(type="file", accept=".csv", size="sm", @input="handleFile")
+  b-form-file.border.border-dark(
+    accept=".csv",
+    size="sm",
+    @input="handleFile"
+  )
   div
     .alert.alert-danger.d-block.mb-0(v-if="errorImporting") Error importing data
     template(v-if="importSuccess")
@@ -22,12 +26,10 @@
   .row.g-2
     .col-9
       .vstack.gap-2
-        .input-group.border.border-dark
-          .input-group-text Remote ID
-          input.form-control(type="text", v-model="remoteId")
-        .input-group.border.border-dark
-          .input-group-text Passphrase
-          input.form-control(type="text", v-model="passphrase")
+        b-input-group(prepend="Remote ID")
+          b-form-input(v-model="remoteId")
+        b-input-group(prepend="Passphrase")
+          b-form-input(v-model="passphrase")
     .col-3
       button.btn.btn-primary.w-100.h-100(@click="loadToImport", :disabled="remoteId === ''") Fetch remote
   .alert.alert-warning.d-block.mb-0(v-if="remoteStatus.ready") Enter a passphrase (if required) and click "Fetch remote"
@@ -42,7 +44,6 @@ import papa from "papaparse";
 import is from "@sindresorhus/is";
 import { DayData } from "~~/utils/models/DayData";
 import { DayMood } from "~~/utils/enums/DayMood";
-import { CFormInput } from "@coreui/bootstrap-vue";
 
 const route = useRoute();
 

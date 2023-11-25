@@ -1,8 +1,8 @@
 <template lang="pug">
 .row.justify-content-center
   .col
-    .card
-      .card-body.p-0.border.border-dark(ref="tableRef")
+    .card.overflow-hidden.border.shadow-sm
+      .card-body.p-0(ref="tableRef")
         .d-block.d-lg-none
           pixels-vertical-table(v-bind="tableProps")
         .d-none.d-lg-block

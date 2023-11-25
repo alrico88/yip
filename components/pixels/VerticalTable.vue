@@ -4,10 +4,14 @@ table.table.table-sm.table-bordered.text-center.mb-0.align-middle
     tr
       th
         .text-small.text-muted Day
-      th(v-for="i of months", :class="{'table-active': parsedSelectedDate?.month === i}")
+      th(
+        v-for="i of months",
+        :key="i",
+        :class="{'table-active': parsedSelectedDate?.month === i}"
+      )
         .month-name {{ getMonthName(i - 1) }}
   tbody
-    tr(v-for="day of days")
+    tr(v-for="day of days", :key="day")
       td.table-light(:class="{'table-active': parsedSelectedDate?.day === day}")
         .clamper {{ day }}
       mood-cell(

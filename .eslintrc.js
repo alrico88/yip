@@ -6,6 +6,7 @@ module.exports = {
     "plugin:vue/vue3-essential",
     "@vue/eslint-config-typescript/recommended",
     "@vue/eslint-config-prettier",
+    "plugin:vue-pug/vue3-recommended",
   ],
   rules: {
     "@typescript-eslint/no-unused-vars": "off",

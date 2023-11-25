@@ -40,6 +40,7 @@ export default defineNuxtConfig({
   modules: [
     "nuxt-icon",
     "@vueuse/nuxt",
+    "@bootstrap-vue-next/nuxt",
     [
       "@pinia/nuxt",
       {

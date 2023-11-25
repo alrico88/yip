@@ -20,6 +20,7 @@ html {
 $dark: #164761;
 $primary: #3730a3;
 $success: #205C63;
+$border-color: $dark;
 
 @import 'node_modules/bootstrap/scss/bootstrap';
 
@@ -63,8 +64,8 @@ $success: #205C63;
   background-color: white;
   height: 15rem;
   padding: 20px;
-  border-radius: 20px;
-  border: 2px solid black;
+  @extend .border;
+  @extend .rounded;
 }
 
 .border-yip {
@@ -98,4 +99,8 @@ $success: #205C63;
 
 .bottom-sheet-backdrop {
   z-index: 1021;
+}
+
+.nav-link.active {
+  font-weight: 600;;
 }

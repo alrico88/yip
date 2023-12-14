@@ -1,5 +1,5 @@
 <template lang="pug">
-button.btn.btn-primary(@click="() => copy(toCopy)", :disabled="copied")
+button.btn.btn-primary(@click.prevent="() => copy(toCopy)", :disabled="copied")
   icon(name="bi:clipboard") 
   |  {{ copied ? 'Copied' : 'Copy' }} to clipboard
 </template>

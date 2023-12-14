@@ -19,7 +19,7 @@ html {
 
 $dark: #164761;
 $primary: #3730a3;
-$success: #205C63;
+$success: #205c63;
 $border-color: $dark;
 
 @import 'node_modules/bootstrap/scss/bootstrap';
@@ -89,7 +89,7 @@ $border-color: $dark;
 }
 
 .in-future {
-  background-color: #fafcfd !important;
+  background-color: #f5f9fc !important;
 }
 
 .bottom-sheet {
@@ -102,5 +102,5 @@ $border-color: $dark;
 }
 
 .nav-link.active {
-  font-weight: 600;;
+  font-weight: 600;
 }

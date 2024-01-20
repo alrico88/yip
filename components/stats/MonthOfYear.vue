@@ -3,14 +3,11 @@
   .col
     h4.fw-bold Average mood by month of year
     .chart-div
-      line-chart(
-        :options="chartOptions",
-        :data="byMonthOfYear"
-      )
+      line-chart(:options="castOptions", :data="byMonthOfYear")
 </template>
 
 <script setup lang="ts">
-import type { ChartOptions, ChartData } from "chart.js";
+import type { ChartData, ChartOptions } from "chart.js";
 import { DayData } from "~~/utils/models/DayData";
 import { orderBy, groupBy } from "lodash-es";
 import { calcMean } from "math-helper-functions";
@@ -29,19 +26,19 @@ ChartJS.register(Title, Tooltip, LineElement, CategoryScale, PointElement);
 
 const props = defineProps<{
   yearData: DayData[];
-  chartOptions: ChartOptions;
+  chartOptions: Partial<ChartOptions>;
 }>();
+
+const castOptions = computed(() => props.chartOptions as ChartOptions<"line">);
 
 const byMonthOfYear = computed<ChartData<"line", number[], string>>(() => {
   const grouped = groupBy(props.yearData, (d) => dayjs(d.date).month());
 
   const data = orderBy(
-    Object.entries(grouped).map(([month, values]) => {
-      return {
-        month,
-        median: calcMean(values, "mood"),
-      };
-    }),
+    Object.entries(grouped).map(([month, values]) => ({
+      month,
+      median: calcMean(values, "mood"),
+    })),
     (d) => Number(d.month),
     "asc"
   );

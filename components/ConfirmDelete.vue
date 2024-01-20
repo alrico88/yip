@@ -1,9 +1,14 @@
 <template lang="pug">
 .hstack.gap-2
-  button.btn.text-nowrap(:class="btnClass", @click="performDelete")
+  b-button.text-nowrap(:variant="btnClass", @click="performDelete")
     icon(name="material-symbols:delete-outline")
-    |  {{ textShown }}
-  button.btn.btn-secondary(v-if="isConfirming", @click="isConfirming = false") Cancel
+    |
+    | {{ textShown }}
+  b-button(
+    variant="secondary",
+    v-if="isConfirming",
+    @click="isConfirming = false"
+  ) Cancel
 </template>
 
 <script setup lang="ts">
@@ -34,7 +39,7 @@ function performDelete(): void {
 }
 
 const btnClass = computed(() =>
-  props.filled === true ? "btn-danger" : "btn-outline-danger"
+  props.filled === true ? "danger" : "outline-danger"
 );
 
 const textShown = computed(() => (isConfirming.value ? "Sure?" : props.text));

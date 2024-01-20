@@ -15,7 +15,7 @@ export const useDataStore = defineStore("dataStore", () => {
   } = useCounter(new Date().getFullYear());
 
   const increaseDisabled = computed(
-    () => year.value === new Date().getFullYear(),
+    () => year.value === new Date().getFullYear()
   );
 
   const daysMoods = persistedRef<DayData[]>([], "daysMoods");
@@ -52,17 +52,16 @@ export const useDataStore = defineStore("dataStore", () => {
     remove(daysMoods.value, (d) => d.date === date);
   }
 
-  const indexedDateMoods = computed(() => {
-    return new FastArraySearcher(daysMoods.value, {
-      indexGetter: "date",
-      valueGetter: (d) => {
-        return {
+  const indexedDateMoods = computed(
+    () =>
+      new FastArraySearcher(daysMoods.value, {
+        indexGetter: "date",
+        valueGetter: (d) => ({
           mood: d.mood,
           comment: d.comment,
-        };
-      },
-    });
-  });
+        }),
+      })
+  );
 
   const selectedDateData = computed<null | DayData>(() => {
     if (is.nullOrUndefined(selectedDate.value)) {
@@ -96,7 +95,7 @@ export const useDataStore = defineStore("dataStore", () => {
     }
 
     daysMoods.value.push(
-      new DayData(date, currentData?.mood ?? DayMood.Neutral, comment),
+      new DayData(date, currentData?.mood ?? DayMood.Neutral, comment)
     );
   }
 
@@ -134,9 +133,9 @@ export const useDataStore = defineStore("dataStore", () => {
       day = day.add(1, "day");
     }
 
-    const withoutCurrentYear = daysMoods.value.filter((d) => {
-      return dayjs(d.date).year() !== year.value;
-    });
+    const withoutCurrentYear = daysMoods.value.filter(
+      (d) => dayjs(d.date).year() !== year.value
+    );
 
     daysMoods.value = [...withoutCurrentYear, ...moodsToAdd];
   }

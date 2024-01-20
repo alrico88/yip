@@ -9,7 +9,11 @@
       .vstack.gap-2
         h4.fw-bolder.mb-0 Delete
         div
-          confirm-delete(@delete="daysMoods = []", text="Delete all data", filled)
+          confirm-delete(
+            @delete="daysMoods = []",
+            text="Delete all data",
+            filled
+          )
 </template>
 
 <script setup lang="ts">

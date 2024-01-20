@@ -3,10 +3,7 @@
   .col
     h4.fw-bold Average mood by week of year
     .chart-div
-      line-chart(
-        :options="chartOptions",
-        :data="byWeekOfYear"
-      )
+      line-chart(:options="castOptions", :data="byWeekOfYear")
 </template>
 
 <script setup lang="ts">
@@ -32,19 +29,18 @@ ChartJS.register(Title, Tooltip, LineElement, CategoryScale, PointElement);
 
 const props = defineProps<{
   yearData: DayData[];
-  chartOptions: ChartOptions;
+  chartOptions: Partial<ChartOptions>;
 }>();
+const castOptions = computed(() => props.chartOptions as ChartOptions<"line">);
 
 const byWeekOfYear = computed<ChartData<"line", number[], string>>(() => {
   const grouped = groupBy(props.yearData, (d) => dayjs(d.date).week());
 
   const data = orderBy(
-    Object.entries(grouped).map(([week, values]) => {
-      return {
-        week,
-        median: calcMean(values, "mood"),
-      };
-    }),
+    Object.entries(grouped).map(([week, values]) => ({
+      week,
+      median: calcMean(values, "mood"),
+    })),
     (d) => Number(d.week),
     "asc"
   );

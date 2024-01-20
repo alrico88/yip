@@ -2,17 +2,22 @@
 .overflow-y-auto
   .container-xxl.py-3
     .vstack.gap-4
-      year-pixels(:year="year" ref="yearPixelsRef")
+      year-pixels(:year="year", ref="yearPixelsRef")
       .row
         .col
           year-progress
       .row
         .col.text-center
-          button.btn.btn-primary(@click="handleSaveClick", :disabled="exporting")
+          b-button(
+            variant="primary",
+            @click="handleSaveClick",
+            :disabled="exporting"
+          )
             icon(name="mdi:checkerboard")
-            |  {{ exportingBtnText }}
+            |
+            | {{ exportingBtnText }}
 sheet.mood-bg(
-  v-model:visible="showSlideover", 
+  v-model:visible="showSlideover",
   :style="sheetStyle",
   :only-header-swipe="true"
 )
@@ -21,23 +26,25 @@ sheet.mood-bg(
       .col
         .hstack.gap-2.justify-content-between.align-items-center
           div
-            button.btn.btn-light.btn-lg(
-              type="button", 
+            b-button(
+              :variant="btnVariant",
+              size="lg",
               @click="dataStore.previousDay()",
-              title="Previous day"
+              v-b-tooltip="'Previous day'"
             )
-              icon(name="bi:arrow-left")
+              icon(name="tabler:arrow-left", size="30")
           .flex-grow-1
             h4 {{ formattedDate }}
             .lead.mb-o Your day was:
           div
-            button.btn.btn-light.btn-lg(
-              type="button", 
+            b-button(
+              :variant="btnVariant",
+              size="lg",
               @click="dataStore.nextDay()",
-              title="Next day",
+              v-b-tooltip="'Next day'",
               :disabled="!canGoNext"
             )
-              icon(name="bi:arrow-right")
+              icon(name="tabler:arrow-right", size="30")
     mood-board
 </template>
 
@@ -45,6 +52,7 @@ sheet.mood-bg(
 import { useDataStore } from "~/stores/data";
 import dayjs from "dayjs";
 import { Sheet } from "bottom-sheet-vue3";
+import { vBTooltip } from "bootstrap-vue-next";
 
 useHead({
   title: "YiP (Year in Pixels)",
@@ -70,11 +78,17 @@ const showSlideover = computed({
 });
 
 const formattedDate = computed(() =>
-  dayjs(selectedDate.value).format("dddd DD, MMMM, YYYY"),
+  dayjs(selectedDate.value).format("dddd DD, MMMM, YYYY")
+);
+
+const colorMode = useColorMode();
+
+const btnVariant = computed(() =>
+  colorMode.value === "light" ? "light" : "secondary"
 );
 
 const selectedMoodBgColor = computed<string>(() => {
-  const defaultColor = "white";
+  const defaultColor = colorMode.value === "light" ? "white" : "black";
 
   if (selectedDateData.value === null) {
     return defaultColor;
@@ -90,30 +104,26 @@ const selectedMoodBgColor = computed<string>(() => {
 });
 
 const selectedMoodTextColor = computed(() =>
-  getGoodContrastColor(selectedMoodBgColor.value),
+  getGoodContrastColor(selectedMoodBgColor.value)
 );
 
 onMounted(() => {
   selectedDate.value = null;
 });
 
-const sheetStyle = computed(() => {
-  return {
-    "--bottom-sheet-bakground-color": selectedMoodBgColor.value,
-    "--bottom-sheet-text-color": selectedMoodTextColor.value,
-  };
-});
+const sheetStyle = computed(() => ({
+  "--bottom-sheet-bakground-color": selectedMoodBgColor.value,
+  "--bottom-sheet-text-color": selectedMoodTextColor.value,
+}));
 
 const canGoNext = computed(() =>
-  dayjs(selectedDate.value).isBefore(dayjs().startOf("day")),
+  dayjs(selectedDate.value).isBefore(dayjs().startOf("day"))
 );
 
 const exporting = ref(false);
-const exportingBtnText = computed(() => {
-  return exporting.value
-    ? "Exporting to image..."
-    : "Save year pixels as image";
-});
+const exportingBtnText = computed(() =>
+  exporting.value ? "Exporting to image..." : "Save year pixels as image"
+);
 
 const yearPixelsRef = templateRef("yearPixelsRef");
 

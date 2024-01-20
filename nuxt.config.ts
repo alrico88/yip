@@ -22,7 +22,6 @@ export default defineNuxtConfig({
         },
       ],
       htmlAttrs: {
-        "data-bs-theme": "light",
         lang: "en",
       },
     },
@@ -49,6 +48,7 @@ export default defineNuxtConfig({
     ],
     "@pinia-plugin-persistedstate/nuxt",
     "@vite-pwa/nuxt",
+    "@nuxtjs/color-mode",
   ],
   experimental: {
     payloadExtraction: false,
@@ -108,5 +108,9 @@ export default defineNuxtConfig({
     redisUrl: "",
     redisPass: "",
     encryptPass: "",
+  },
+  colorMode: {
+    dataValue: "bs-theme",
+    storageKey: "nuxt-color-mode",
   },
 });

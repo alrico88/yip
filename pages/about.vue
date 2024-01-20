@@ -12,21 +12,37 @@
       p.mb-0 YiP was built using:
       ul.list-unstyled
         li
-          icon-link(icon="logos:nuxt-icon", text="Nuxt", link="https://nuxt.com", new-tab)
+          icon-link(
+            icon-name="logos:nuxt-icon",
+            text="Nuxt",
+            link="https://nuxt.com",
+            new-tab
+          )
         li
-          icon-link(icon="logos:vue", text="Vue 3", link="https://vuejs.org", new-tab)
-          li
-          icon-link(icon="bi:graph-up-arrow", text="Chart.JS", link="https://www.chartjs.org", new-tab)
+          icon-link(
+            icon-name="logos:vue",
+            text="Vue 3",
+            link="https://vuejs.org",
+            new-tab
+          )
+        li
+          icon-link(
+            icon-name="bi:graph-up-arrow",
+            text="Chart.JS",
+            link="https://www.chartjs.org",
+            new-tab
+          )
       p Your data is persisted in the browsers IndexedDB. If you want to move to another browser / device, please export and restore your data using #[nuxt-link(to="/backup") backup].
   .row.mb-2
     .col
       h4.fw-bolder Seed data
       .hstack.gap-2.align-items-center
         div
-          button.btn.btn-warning(
+          b-button(
+            variant="warning",
             @click="generateRandomData",
-            :disabled="generated",
-          ) #[icon(name="mdi:dice-3-outline")] {{ generated ? 'Done!' : 'Generate random data' }}
+            :disabled="generated"
+          ) #[icon(name="mdi:dice-3-outline")] {{ generated ? "Done!" : "Generate random data" }}
         .text-danger Caution: it will overwrite your selected year
   .row.mb-2
     .col
@@ -34,13 +50,7 @@
       .vstack.gap-2
         div Prevent showing or exporting comments by toggling private mode on.
         div
-          .form-check.w-auto
-            input.form-check-input(
-              type="checkbox" 
-              id="privateMode",
-              v-model="privateMode"
-            )
-            label.form-check-label(for="privateMode") Use private mode
+          b-form-checkbox(v-model="privateMode") Use private mode
   .row
     .col
       h4.fw-bolder Copyright

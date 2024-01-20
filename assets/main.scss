@@ -1,4 +1,4 @@
-$font-family-sans-serif: 'Source Sans Pro', sans-serif;
+$font-family-sans-serif: "Source Sans Pro", sans-serif;
 
 :root {
   --bottom-sheet-max-width: 800px;
@@ -13,8 +13,47 @@ html {
   @media (min-width: 769px) {
     font-size: 16px;
   }
+}
 
-  background-color: #fcf8f4 !important;
+[data-bs-theme="light"] {
+  body {
+    background-color: #fcf8f4 !important;
+  }
+
+  .chart-div {
+    background-color: white;
+  }
+
+  td.in-future {
+    background-color: #c4c4c4 !important;
+  }
+}
+
+[data-bs-theme="dark"] {
+  html {
+    background-color: #1c1816;
+  }
+
+  .bg-white {
+    background-color: #323232;
+  }
+
+  .chart-div {
+    background-color: #1c1816;
+  }
+
+  td.in-future {
+    background-color: #3f3f3f !important;
+  }
+
+  .mood-bg {
+    --bottom-sheet-bakground-color: black;
+    --bottom-sheet-text-color: white;
+  }
+
+  .btn-dark {
+    background-color: #112840;
+  }
 }
 
 $dark: #164761;
@@ -22,7 +61,7 @@ $primary: #3730a3;
 $success: #205c63;
 $border-color: $dark;
 
-@import 'node_modules/bootstrap/scss/bootstrap';
+@import "node_modules/bootstrap/scss/bootstrap";
 
 .overflow-y {
   overflow-y: auto;
@@ -61,7 +100,6 @@ $border-color: $dark;
 }
 
 .chart-div {
-  background-color: white;
   height: 15rem;
   padding: 20px;
   @extend .border;
@@ -86,10 +124,6 @@ $border-color: $dark;
 
 .mood-cell {
   transition: all 0.5s ease;
-}
-
-.in-future {
-  background-color: #f5f9fc !important;
 }
 
 .bottom-sheet {

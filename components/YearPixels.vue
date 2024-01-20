@@ -1,8 +1,8 @@
 <template lang="pug">
 .row.justify-content-center
   .col
-    .card.overflow-hidden.border.shadow-sm
-      .card-body.p-0(ref="tableRef")
+    b-card.overflow-hidden.border.shadow-sm(no-body)
+      b-card-body.p-0(ref="tableRef")
         .d-block.d-lg-none
           pixels-vertical-table(v-bind="tableProps")
         .d-none.d-lg-block
@@ -25,16 +25,19 @@ const tableProps = {
   days,
 };
 
-const tableRef = templateRef("tableRef");
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const tableRef = templateRef<any>("tableRef");
 
 async function saveToImage() {
+  console.log(tableRef.value);
+
   saveAs(
-    await toPng(tableRef.value as HTMLElement, {
+    await toPng(tableRef.value.$el as HTMLElement, {
       filter(node) {
         return !node?.classList?.contains("no-export");
       },
     }),
-    `year-${props.year}-in-pixels-png`,
+    `year-${props.year}-in-pixels-png`
   );
 }
 

@@ -1,17 +1,19 @@
 <template lang="pug">
 table.table.table-sm.table-bordered.text-center.mb-0.align-middle
-  thead.bg-light.sticky-top
+  thead.sticky-top(:class="tableClass.head")
     tr
       th
         .text-small.text-muted Day
       th(
         v-for="day of days",
         :key="day",
-        :class="{'table-active': parsedSelectedDate?.day === day}"
+        :class="{ 'table-active': parsedSelectedDate?.day === day }"
       ) {{ day }}
   tbody
     tr(v-for="month of months", :key="month")
-      td.table-light(:class="{'table-active': parsedSelectedDate?.month === month}") {{ getMonthName(month - 1) }}
+      td(
+        :class="[{ 'table-active': parsedSelectedDate?.month === month }, tableClass.body]"
+      ) {{ getMonthName(month - 1) }}
       mood-cell(
         v-for="day of days",
         :key="convertToDateStr(day, month, year)",
@@ -28,6 +30,8 @@ const props = defineProps<{
   months: number;
   days: number;
 }>();
+
+const { tableClass } = useColorValues();
 
 const {
   selectedDate,

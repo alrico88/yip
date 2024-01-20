@@ -3,10 +3,7 @@
   .col
     h4.fw-bold Number of days by mood
     .chart-div
-      bar(
-        :options="options", 
-        :data="daysByMood"
-      )
+      bar(:options="castOptions", :data="daysByMood")
 </template>
 
 <script setup lang="ts">
@@ -28,18 +25,17 @@ ChartJS.register(Title, Tooltip, BarElement, CategoryScale, LinearScale);
 
 const props = defineProps<{
   yearData: DayData[];
+  chartOptions: Partial<ChartOptions>;
 }>();
 
 const daysByMood = computed<ChartData<"bar", number[], string>>(() => {
   const countedByMood = countBy(props.yearData, (d) => d.mood);
 
   const sorted = orderBy(
-    Object.entries(countedByMood).map(([mood, count]) => {
-      return {
-        mood,
-        count,
-      };
-    }),
+    Object.entries(countedByMood).map(([mood, count]) => ({
+      mood,
+      count,
+    })),
     "count",
     "desc"
   );
@@ -58,8 +54,12 @@ const daysByMood = computed<ChartData<"bar", number[], string>>(() => {
   };
 });
 
-const options: ChartOptions = {
-  responsive: true,
-  maintainAspectRatio: false,
-};
+const castOptions = computed(
+  () =>
+    ({
+      responsive: true,
+      maintainAspectRatio: false,
+      ...props.chartOptions,
+    }) as Partial<ChartOptions<"bar">>
+);
 </script>

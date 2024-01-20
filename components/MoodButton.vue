@@ -1,10 +1,11 @@
 <template lang="pug">
-button.w-100.btn.btn-light(
-  :class="{active}"
+b-button.w-100(
+  :active="active",
+  :variant="colorMode.value === 'light' ? 'light' : 'dark'"
 )
   .vstack.gap-2
     div
-      icon.mood-icon(:name="icon")
+      icon.mood-icon(:name="iconName")
     .text-truncate {{ text }}
     .mood-bar.w-100.rounded
 </template>
@@ -14,18 +15,20 @@ import is from "@sindresorhus/is";
 import { DayMood } from "~~/utils/enums/DayMood";
 
 const props = defineProps<{
-  icon: string;
+  iconName: string;
   mood: DayMood | null;
   active: boolean;
 }>();
 
 const text = computed(() => (props.mood ? MoodTexts[props.mood] : "N/A"));
 
-const color = computed(() => {
-  return is.nullOrUndefined(props.mood)
+const color = computed(() =>
+  is.nullOrUndefined(props.mood)
     ? "black"
-    : (colorScale(Number(props.mood)) as string);
-});
+    : (colorScale(Number(props.mood)) as string)
+);
+
+const colorMode = useColorMode();
 </script>
 
 <style lang="scss" scoped>

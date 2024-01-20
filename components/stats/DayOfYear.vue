@@ -3,10 +3,7 @@
   .col
     h4.fw-bold Average mood by day of year
     .chart-div
-      line-chart(
-        :options="chartOptions",
-        :data="byDayOfYear"
-      )
+      line-chart(:options="castOptions", :data="byDayOfYear")
 </template>
 
 <script setup lang="ts">
@@ -28,8 +25,10 @@ ChartJS.register(Title, Tooltip, LineElement, CategoryScale, PointElement);
 
 const props = defineProps<{
   yearData: DayData[];
-  chartOptions: ChartOptions;
+  chartOptions: Partial<ChartOptions>;
 }>();
+
+const castOptions = computed(() => props.chartOptions as ChartOptions<"line">);
 
 const byDayOfYear = computed<ChartData<"line", number[], string>>(() => {
   const data = orderBy(props.yearData, (d) => Number(d.date), "asc");

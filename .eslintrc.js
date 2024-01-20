@@ -11,5 +11,7 @@ module.exports = {
   rules: {
     "@typescript-eslint/no-unused-vars": "off",
     "vue/multi-word-component-names": "off",
+    "object-shorthand": ["error", "properties"],
+    "arrow-body-style": "error",
   },
 };

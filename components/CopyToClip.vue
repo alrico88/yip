@@ -1,7 +1,8 @@
 <template lang="pug">
-button.btn.btn-primary(@click.prevent="() => copy(toCopy)", :disabled="copied")
+b-button(variant="primary", @click.prevent="() => copy()", :disabled="copied")
   icon(name="bi:clipboard") 
-  |  {{ copied ? 'Copied' : 'Copy' }} to clipboard
+  |
+  | {{ copied ? "Copied" : "Copy" }} to clipboard
 </template>
 
 <script setup lang="ts">
@@ -9,5 +10,7 @@ const props = defineProps<{
   toCopy: string;
 }>();
 
-const { copied, copy } = useClipboard();
+const { copied, copy } = useClipboard({
+  source: () => props.toCopy,
+});
 </script>

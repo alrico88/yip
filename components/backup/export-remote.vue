@@ -1,17 +1,19 @@
 <template lang="pug">
-form.vstack.gap-2(@submit.prevent="saveToRemote")
+b-form.vstack.gap-2(@submit.prevent="saveToRemote")
   h4.fw-bolder.mb-0 Share
-  .form-text.mb-0 Get a link to remotely export your data. No identifiable information is stored. Links are valid for 24 hours. You can set a passphrase to encrypt the information.
+  b-form-text.mb-0 Get a link to remotely export your data. No identifiable information is stored. Links are valid for 24 hours. You can set a passphrase to encrypt the information.
   b-input-group(prepend="Passphrase (optional)")
     b-form-input(v-model="passphrase")
-  button.btn.btn-success.w-100(type="submit", :disabled="loading") {{ loading ? 'Getting' : 'Get'}} share link
-  .alert.alert-success.text-center.mb-0(v-if="showSaved")
+  b-button.w-100(variant="success", type="submit", :disabled="loading") {{ loading ? "Getting" : "Get" }} share link
+  b-alert.text-center.mb-0(:model-value="showSaved", variant="success")
     .vstack.gap-2.text-center
       div Your share link is:
-      a.mb-0.bg-white.rounded.p-2(:href="saved") {{ saved }}
+      b-input-group
+        template(#append)
+          copy-to-clip(:to-copy="saved")
+        b-form-input(:model-value="saved", readonly)
       .w-100.text-center
-        img.qr(:src="asQR", alt="QR Code")
-      copy-to-clip(:to-copy="saved")
+        img.qr.rounded(:src="asQR", alt="QR Code")
 </template>
 
 <script setup lang="ts">
@@ -32,7 +34,7 @@ const asQR = ref("");
 const passphrase = ref("");
 
 const showSaved = computed(
-  () => !hasError.value && is.nonEmptyString(saved.value),
+  () => !hasError.value && is.nonEmptyString(saved.value)
 );
 
 async function saveToRemote() {

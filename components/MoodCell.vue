@@ -2,11 +2,11 @@
 td.p-0.text-center.align-middle.mood-cell(
   :title="tooltipContent",
   :class="cellClassNames",
-  :style="cellStyle"
+  :style="cellStyle",
   @click="setDay",
   :data-day="dayAsString"
 )
-  .hstack.gap-1.w-100.justify-content-center
+  .hstack.gap-1.w-100.h-100.justify-content-center
     icon.no-export(v-if="isSelected", size="15", name="fa:crosshairs")
     icon.no-export(v-if="showComment", size="15", name="bi:chat-dots")
 </template>
@@ -33,23 +33,22 @@ const dataStore = useDataStore();
 const { privateMode } = storeToRefs(dataStore);
 
 const showComment = computed(
-  () => !props.isSelected && props.mood?.comment && !privateMode.value,
+  () => !props.isSelected && props.mood?.comment && !privateMode.value
 );
 
-const dayExists = computed(() => {
-  return (
+const dayExists = computed(
+  () =>
     dayjs()
       .set("month", props.month - 1)
       .set("year", props.year)
       .daysInMonth() >= props.day
-  );
-});
+);
 
 const dayAsString = computed(() =>
-  convertToDateStr(props.day, props.month, props.year),
+  convertToDateStr(props.day, props.month, props.year)
 );
 const tooltipContent = computed(() =>
-  dayjs(dayAsString.value).format("ddd DD, MMMM YYYY"),
+  dayjs(dayAsString.value).format("ddd DD, MMMM YYYY")
 );
 
 const today = dayjs().format(dayFormat);
@@ -95,13 +94,11 @@ function setDay(): void {
 
 <style lang="scss" scoped>
 .invalid-day {
-  background: repeating-linear-gradient(
-    135deg,
-    #060606 0,
-    #060606 10%,
-    transparent 0,
-    transparent 50%
-  );
+  background: repeating-linear-gradient(135deg,
+      #060606 0,
+      #060606 10%,
+      transparent 0,
+      transparent 50%);
   background-size: 1em 1em;
   background-color: #ffffff;
   opacity: 0.1;

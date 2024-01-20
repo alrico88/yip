@@ -1,12 +1,13 @@
 <template lang="pug">
 .vstack.gap-2
   h4.fw-bolder.mb-0 Export / Backup
-  .form-text #[b.text-primary -2]: Awful, #[b.text-primary -1]: Bad, #[b.text-primary 0]: Neutral, #[b.text-primary 1]: Good, #[b.text-primary 2]: Great
+  b-form-text #[b.text-primary -2]: Awful, #[b.text-primary -1]: Bad, #[b.text-primary 0]: Neutral, #[b.text-primary 1]: Good, #[b.text-primary 2]: Great
   .hstack.gap-2
     copy-to-clip.w-100(:to-copy="toExport")
-    button.w-100.btn.btn-success(@click="saveToFile")
+    b-button.w-100(variant="success", @click="saveToFile")
       icon(name="bi:download")
-      |  Export to file
+      |
+      | Export to file
   backup-export-remote(:data="toExport")
 </template>
 
@@ -29,12 +30,12 @@ const columnsToExport = computed(() => {
   return cols;
 });
 
-const toExport = computed(() => {
-  return papa.unparse(orderBy(daysMoods.value, "date", "asc"), {
+const toExport = computed(() =>
+  papa.unparse(orderBy(daysMoods.value, "date", "asc"), {
     header: true,
     columns: columnsToExport.value,
-  });
-});
+  })
+);
 
 function saveToFile() {
   saveAs(new Blob([toExport.value]), `my-year-in-pixels.csv`);

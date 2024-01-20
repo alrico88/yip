@@ -1,28 +1,29 @@
 <template lang="pug">
 .vstack.gap-2
   h4.fw-bolder.mb-0 Import
-  .form-text Restore data from another computer or browser
+  b-form-text Restore data from another computer or browser
   b-form-textarea(
-    v-model="toImport", 
-    :rows="10", 
+    v-model="toImport",
+    :rows="10",
     :placeholder="importPlaceholder",
     ref="dropzoneRef"
   )
-  b-form-file.border.border-dark(
-    accept=".csv",
-    size="sm",
-    @input="handleFile"
-  )
+  b-form-file.border.border-dark(accept=".csv", size="sm", @input="handleFile")
   div
-    .alert.alert-danger.d-block.mb-0(v-if="errorImporting") Error importing data
+    b-alert.mb-2(:model-value="errorImporting", variant="danger") Error importing data
     template(v-if="importSuccess")
-      .alert.alert-success.d-block.mb-0(v-if="importSuccess") Imported successfully
+      b-alert.mb-2(:model-value="importSuccess", variant="success") Imported successfully
     template(v-else)
-      button.btn.btn-success.w-100(@click="importData", :disabled="importDisabled")
+      b-button.w-100(
+        variant="success",
+        @click="importData",
+        :disabled="importDisabled"
+      )
         icon(name="bi:upload")
-        |  Import data
+        |
+        | Import data
   h4.fw-bolder.mb-0 Import from share link
-  .form-text Use a share link to import data. If a passphrase was used, you must provide it.
+  b-form-text Use a share link to import data. If a passphrase was used, you must provide it.
   .row.g-2
     .col-9
       .vstack.gap-2
@@ -31,10 +32,14 @@
         b-input-group(prepend="Passphrase")
           b-form-input(v-model="passphrase")
     .col-3
-      button.btn.btn-primary.w-100.h-100(@click="loadToImport", :disabled="remoteId === ''") Fetch remote
-  .alert.alert-warning.d-block.mb-0(v-if="remoteStatus.ready") Enter a passphrase (if required) and click "Fetch remote"
-  .alert.alert-success.d-block.mb-0(v-if="remoteStatus.success") Got data from remote. Click on "Import data" to apply changes
-  .alert.alert-danger.d-block.mb-0(v-if="remoteStatus.error") Invalid remote ID or passphrase
+      b-button.w-100.h-100(
+        variant="primary",
+        @click="loadToImport",
+        :disabled="remoteId === ''"
+      ) Fetch remote
+  b-alert.d-block.mb-0(variant="warning", :model-value="remoteStatus.ready") Enter a passphrase (if required) and click "Fetch remote"
+  b-alert.d-block.mb-0(variant="success", :model-value="remoteStatus.success") Got data from remote. Click on "Import data" to apply changes
+  b-alert.d-block.mb-0(variant="danger", :model-value="remoteStatus.error") Invalid remote ID or passphrase
 </template>
 
 <script setup lang="ts">
@@ -131,7 +136,7 @@ function importData() {
     }
 
     daysMoods.value = parsed.data.map(
-      (d) => new DayData(d.date, d.mood, d.comment),
+      (d) => new DayData(d.date, d.mood, d.comment)
     );
 
     importSuccess.value = true;
@@ -149,6 +154,6 @@ const { isOverDropZone } = useDropZone(dropzoneRef, onDrop);
 const importPlaceholder = computed(() =>
   isOverDropZone.value
     ? "Drop the file"
-    : "Paste the backup or drag and drop a file",
+    : "Paste the backup or drag and drop a file"
 );
 </script>

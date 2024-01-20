@@ -3,10 +3,7 @@
   .col
     h4.fw-bold Average mood by day of week
     .chart-div
-      bar(
-        :options="chartOptions", 
-        :data="byDayOfWeek"
-      )
+      bar(:options="castOptions", :data="byDayOfWeek")
 </template>
 
 <script setup lang="ts">
@@ -29,29 +26,27 @@ ChartJS.register(Title, Tooltip, BarElement, CategoryScale, LinearScale);
 
 const props = defineProps<{
   yearData: DayData[];
-  chartOptions: ChartOptions;
+  chartOptions: Partial<ChartOptions>;
 }>();
+
+const castOptions = computed(() => props.chartOptions as ChartOptions<"bar">);
 
 const byDayOfWeek = computed<ChartData<"bar", number[], string>>(() => {
   const grouped = groupBy(props.yearData, (d) =>
-    dayjs(d.date).day().toString(),
+    dayjs(d.date).day().toString()
   );
 
   const data = orderBy(
-    Object.entries(grouped).map(([dayOfWeek, values]) => {
-      return {
-        dayOfWeek,
-        median: calcMean(values, "mood"),
-      };
-    }),
+    Object.entries(grouped).map(([dayOfWeek, values]) => ({
+      dayOfWeek,
+      median: calcMean(values, "mood"),
+    })),
     "dayOfWeek",
-    "asc",
-  ).map((d) => {
-    return {
-      ...d,
-      dayOfWeek: dayjs().day(Number(d.dayOfWeek)).format("dddd"),
-    };
-  });
+    "asc"
+  ).map((d) => ({
+    ...d,
+    dayOfWeek: dayjs().day(Number(d.dayOfWeek)).format("dddd"),
+  }));
 
   return {
     labels: data.map((d) => d.dayOfWeek),
@@ -60,7 +55,7 @@ const byDayOfWeek = computed<ChartData<"bar", number[], string>>(() => {
         label: "Average mood",
         data: data.map((d) => d.median as number),
         backgroundColor: data.map(
-          (d) => colorScale(d.median as number) as string,
+          (d) => colorScale(d.median as number) as string
         ),
       },
     ],

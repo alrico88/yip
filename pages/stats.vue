@@ -4,12 +4,21 @@
     .vstack.gap-3
       .row.row-cols-1.row-cols-lg-2.g-4
         .col
-          stats-days-by-mood(:year-data="yearData")
+          stats-days-by-mood(
+            :year-data="yearData",
+            :chart-options="commonOptions"
+          )
         .col
-          stats-day-of-week(:year-data="yearData", :chart-options="commonOptions")
+          stats-day-of-week(
+            :year-data="yearData",
+            :chart-options="commonOptions"
+          )
       stats-day-of-year(:year-data="yearData", :chart-options="commonOptions")
       stats-week-of-year(:year-data="yearData", :chart-options="commonOptions")
-      stats-month-of-year(:year-data="yearData", :chart-options="commonOptions")
+      stats-month-of-year(
+        :year-data="yearData",
+        :chart-options="commonOptions"
+      )
 </template>
 
 <script setup lang="ts">
@@ -31,22 +40,42 @@ useHead({
 const dataStore = useDataStore();
 const { daysMoods, year } = storeToRefs(dataStore);
 
-const yearData = computed(() => {
-  return daysMoods.value.filter((d) => dayjs(d.date).year() === year.value);
-});
+const yearData = computed(() =>
+  daysMoods.value.filter((d) => dayjs(d.date).year() === year.value)
+);
 
-const commonOptions = {
-  responsive: true,
-  maintainAspectRatio: false,
-  scales: {
-    y: {
-      ticks: {
-        stepSize: 1,
-        callback(tickVal: number) {
-          return MoodTexts[tickVal as unknown as DayMood] as string;
+const colorMode = useColorMode();
+
+const commonOptions = computed(() => {
+  const isLight = colorMode.value === "light";
+  const textColor = isLight ? undefined : "white";
+  const gridColor = isLight ? undefined : "#414141";
+
+  return {
+    responsive: true,
+    maintainAspectRatio: false,
+    scales: {
+      x: {
+        ticks: {
+          color: textColor,
+        },
+        grid: {
+          color: gridColor,
+        },
+      },
+      y: {
+        grid: {
+          color: gridColor,
+        },
+        ticks: {
+          color: textColor,
+          stepSize: 1,
+          callback(tickVal: number) {
+            return MoodTexts[tickVal as unknown as DayMood] as string;
+          },
         },
       },
     },
-  },
-} as unknown as ChartOptions;
+  } as Partial<ChartOptions>;
+});
 </script>
